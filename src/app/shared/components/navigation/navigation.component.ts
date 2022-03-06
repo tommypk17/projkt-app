@@ -19,10 +19,12 @@ export class NavigationComponent implements OnInit {
       {
         label:'Home',
         icon:'pi pi-home',
+        routerLink:'/'
       },
       {
         label: 'Cocomo',
-        icon: 'pi pi-box'
+        icon: 'pi pi-box',
+        routerLink:'/cocomo'
       }
     ];
 
@@ -30,6 +32,7 @@ export class NavigationComponent implements OnInit {
       {
         label:'Settings',
         icon:'pi pi-cog',
+        routerLink: '/settings'
       }
     ];
 

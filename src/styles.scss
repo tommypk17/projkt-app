@@ -40,6 +40,10 @@ html, body {
   box-shadow: 3px 3px 7px 0px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%) !important;
 }
 
+.p-card-header {
+  padding: 1rem;
+}
+
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw);
 }

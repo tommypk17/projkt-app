@@ -5,15 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
 import {HomeModule} from "./modules/home/home.module";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavigationComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SharedModule,
 
     HomeModule
   ],

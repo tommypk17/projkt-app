@@ -1,9 +1,32 @@
-<p-card *ngFor="let x of xs" [style]="{'margin-bottom': '2em'}">
+<p-card [style]="{'margin-bottom': '2em'}">
   <ng-template pTemplate="header">
-    {{x}}
+    <h1>Getting Started</h1>
   </ng-template>
-  Body Content
+  <p>
+    This app was designed to give friendly and useful functions to calculate COCOMOs,
+    generate initial estimates, and generally assist with understanding project effort levels.
+  </p>
+  <br />
+  <p>
+    Select one of the items below by clicking the button corresponding to the function you would like to start using.
+    You can also use the navigation menu to quickly navigate between functions.
+  </p>
+</p-card>
+<p-card [style]="{'margin-bottom': '2em'}">
+  <ng-template pTemplate="header">
+    <h1>Calculate COCOMO</h1>
+  </ng-template>
+  <p>
+    COCOMO was originally developed by Barry W. Boehm, an american software engineer,
+    to assist with procedurally generating software project estimates.
+  </p>
+  <br />
+  <p>
+    COCOMO can be a useful first step to understanding effort levels required for software projects.
+  </p>
   <ng-template pTemplate="footer">
-    Footer content here
+    <div class="d-flex justify-content-center">
+      <button pButton label="Get Started"></button>
+    </div>
   </ng-template>
 </p-card>

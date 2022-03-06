@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './pages/home/home.component';
 import {HomeRoutingModule} from "./home-routing.module";
 import {CardModule} from "primeng/card";
+import {ButtonModule} from "primeng/button";
 
 
 
@@ -13,7 +14,8 @@ import {CardModule} from "primeng/card";
   imports: [
     CommonModule,
     HomeRoutingModule,
-    CardModule
+    CardModule,
+    ButtonModule
   ]
 })
 export class HomeModule { }

@@ -1,1 +1,73 @@
-<p>cocomo works!</p>
+<p-card [style]="{'margin-bottom': '2em'}">
+  <ng-template pTemplate="header">
+    <div class="mb-2">
+      <h2>Calculate a COCOMO</h2>
+    </div>
+  </ng-template>
+  <div class="d-flex flex-row justify-content-end">
+    <button pButton class="p-button-text p-button-danger" icon="pi pi-minus" label="collapse all" (click)="collapseAll()"></button>
+    <button pButton class="p-button-text p-button-success" icon="pi pi-plus" label="expand all"  (click)="expandAll()"></button>
+  </div>
+  <p-fieldset legend="General Attributes" [toggleable]="true" [collapsed]="collapse">
+    <div class="d-flex flex-wrap">
+      <div class="mb-2 mr-2">
+        <span class="p-float-label">
+          <p-inputNumber inputId="linesOfCode" [(ngModel)]="cocomo['linesOfCode']"></p-inputNumber>
+          <label for="linesOfCode">Lines of Code</label>
+        </span>
+      </div>
+      <div>
+        <span class="p-float-label" style="min-width:250px;">
+          <p-dropdown [styleClass]="'w-100'" inputId="dropdown-mode" [autoDisplayFirst]="displayFirst" [options]="cocomoModes" [(ngModel)]="cocomo['model']" optionValue="mode" optionLabel="name"></p-dropdown>
+          <label for="dropdown-mode">Model</label>
+        </span>
+      </div>
+    </div>
+  </p-fieldset>
+  <p-fieldset legend="Product Attributes" [toggleable]="true" [collapsed]="collapse">
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let field of productCocomoFields" class="mb-2 mr-2">
+        <span class="p-float-label" style="min-width:250px;">
+          <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
+          <label for="dropdown-{{field.key}}">{{field.value}}</label>
+        </span>
+      </div>
+    </div>
+  </p-fieldset>
+  <p-fieldset legend="Hardware Attributes" [toggleable]="true" [collapsed]="collapse">
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let field of hardwareCocomoFields" class="mb-2 mr-2">
+        <span class="p-float-label" style="min-width:250px;">
+          <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
+          <label for="dropdown-{{field.key}}">{{field.value}}</label>
+        </span>
+      </div>
+    </div>
+  </p-fieldset>
+  <p-fieldset legend="Personnel Attributes" [toggleable]="true" [collapsed]="collapse">
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let field of personnelCocomoFields" class="mb-2 mr-2">
+        <span class="p-float-label" style="min-width:250px;">
+          <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
+          <label for="dropdown-{{field.key}}">{{field.value}}</label>
+        </span>
+      </div>
+    </div>
+  </p-fieldset>
+  <p-fieldset legend="Project Attributes" [toggleable]="true" [collapsed]="collapse">
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let field of projectCocomoFields" class="mb-2 mr-2">
+        <span class="p-float-label" style="min-width:250px;">
+          <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
+          <label for="dropdown-{{field.key}}">{{field.value}}</label>
+        </span>
+      </div>
+    </div>
+  </p-fieldset>
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end">
+      <button pButton label="Calculate" (click)="calculate()"></button>
+    </div>
+  </ng-template>
+</p-card>
+<app-cocomo-results *ngIf="cocomo" [cocomoResults]="cocomoResults"></app-cocomo-results>

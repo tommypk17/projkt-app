@@ -1,0 +1,30 @@
+<p-card [style]="{'margin-bottom': '2em'}" *ngIf="cocomoResults">
+  <p-fieldset legend="Results">
+    <div class="d-flex flex-wrap">
+      <div class="mb-2 mr-2">
+        <span class="p-float-label">
+          <p-inputNumber [disabled]="true" inputId="adjustedTime" [(ngModel)]="cocomoResults.adjustedTime"></p-inputNumber>
+          <label for="adjustedTime">Adjusted Time (months)</label>
+        </span>
+      </div>
+      <div class="mb-2 mr-2">
+        <span class="p-float-label">
+          <p-inputNumber [disabled]="true" inputId="developmentTime" [(ngModel)]="cocomoResults.developmentTime"></p-inputNumber>
+          <label for="adjustedTime">Development Time (months)</label>
+        </span>
+      </div>
+      <div class="mb-2 mr-2">
+        <span class="p-float-label">
+          <p-inputNumber [disabled]="true" inputId="staffingTime" [(ngModel)]="cocomoResults.staffingTime"></p-inputNumber>
+          <label for="staffingTime">Staffing (FTEs)</label>
+        </span>
+      </div>
+      <div class="mb-2 mr-2">
+        <span class="p-float-label">
+          <p-inputNumber [disabled]="true" inputId="totalHours" [(ngModel)]="cocomoResults.totalHours"></p-inputNumber>
+          <label for="totalHours">Total Hours</label>
+        </span>
+      </div>
+    </div>
+  </p-fieldset>
+</p-card>

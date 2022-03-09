@@ -90,3 +90,14 @@ h6, .h6 {
 small, .small {
   font-size: 0.875em;
 }
+
+@media screen and (min-width: 768px){
+  :root {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 1024px){
+  :root {
+    font-size: 12px;
+  }
+}

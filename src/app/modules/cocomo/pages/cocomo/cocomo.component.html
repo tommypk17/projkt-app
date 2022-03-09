@@ -17,7 +17,7 @@
         </span>
       </div>
       <div>
-        <span class="p-float-label" style="min-width:250px;">
+        <span class="p-float-label" style="min-width:275px;">
           <p-dropdown [styleClass]="'w-100'" inputId="dropdown-mode" [autoDisplayFirst]="displayFirst" [options]="cocomoModes" [(ngModel)]="cocomo['model']" optionValue="mode" optionLabel="name"></p-dropdown>
           <label for="dropdown-mode">Model</label>
         </span>
@@ -27,7 +27,7 @@
   <p-fieldset legend="Product Attributes" [toggleable]="true" [collapsed]="collapse">
     <div class="d-flex flex-wrap">
       <div *ngFor="let field of productCocomoFields" class="mb-2 mr-2">
-        <span class="p-float-label" style="min-width:250px;">
+        <span class="p-float-label" style="min-width:275px;">
           <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
           <label for="dropdown-{{field.key}}">{{field.value}}</label>
         </span>
@@ -37,7 +37,7 @@
   <p-fieldset legend="Hardware Attributes" [toggleable]="true" [collapsed]="collapse">
     <div class="d-flex flex-wrap">
       <div *ngFor="let field of hardwareCocomoFields" class="mb-2 mr-2">
-        <span class="p-float-label" style="min-width:250px;">
+        <span class="p-float-label" style="min-width:275px;">
           <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
           <label for="dropdown-{{field.key}}">{{field.value}}</label>
         </span>
@@ -47,7 +47,7 @@
   <p-fieldset legend="Personnel Attributes" [toggleable]="true" [collapsed]="collapse">
     <div class="d-flex flex-wrap">
       <div *ngFor="let field of personnelCocomoFields" class="mb-2 mr-2">
-        <span class="p-float-label" style="min-width:250px;">
+        <span class="p-float-label" style="min-width:275px;">
           <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
           <label for="dropdown-{{field.key}}">{{field.value}}</label>
         </span>
@@ -57,7 +57,7 @@
   <p-fieldset legend="Project Attributes" [toggleable]="true" [collapsed]="collapse">
     <div class="d-flex flex-wrap">
       <div *ngFor="let field of projectCocomoFields" class="mb-2 mr-2">
-        <span class="p-float-label" style="min-width:250px;">
+        <span class="p-float-label" style="min-width:275px;">
           <p-dropdown [styleClass]="'w-100'" inputId="dropdown-{{field.key}}" [autoDisplayFirst]="displayFirst" [options]="cocomoRatingChoices" [(ngModel)]="cocomo[field.key]" optionValue="rating" optionLabel="name"></p-dropdown>
           <label for="dropdown-{{field.key}}">{{field.value}}</label>
         </span>

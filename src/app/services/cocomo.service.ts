@@ -8,7 +8,7 @@ import {KeyValue} from "@angular/common";
 import {CocomoRequest, CocomoResponse} from "../shared/models/COCOMO";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class CocomoService {
 

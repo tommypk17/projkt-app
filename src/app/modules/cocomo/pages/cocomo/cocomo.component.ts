@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {KeyValue} from "@angular/common";
-import {map} from "rxjs/operators";
 import {CocomoModes, CocomoRating, CocomoRequest, CocomoResponse} from "../../../../shared/models/COCOMO";
 import {CocomoService} from "../../../../services/cocomo.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-cocomo',
@@ -23,7 +23,7 @@ export class CocomoComponent implements OnInit {
 
   cocomoResults: CocomoResponse | undefined;
 
-  constructor(private cocomoService: CocomoService) { }
+  constructor(private cocomoService: CocomoService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.cocomoRatingChoices = [
@@ -65,6 +65,9 @@ export class CocomoComponent implements OnInit {
       if(res){
         this.cocomoResults = res;
         this.collapseAll();
+        this.messageService.add({key: 'global', severity:'success', summary: 'COCOMO Calculated', detail: 'The requested COCOMO results have been calculated.'})
+      }else{
+        this.messageService.add({key:'global', severity:'error', summary: 'COCOMO Not Calculated', detail: 'The requested COCOMO could not be calculated. Please review the COCOMO and try to resubmit.'})
       }
     });
   }
@@ -74,6 +77,7 @@ export class CocomoComponent implements OnInit {
     this.cocomoResults = undefined;
     this.expandAll();
     window.scroll(0,0);
+    this.messageService.add({key: 'global', severity:'info', summary: 'COCOMO Reset', detail: 'The COCOMO form has been reset.'})
   }
 
   collapseAll(): void{

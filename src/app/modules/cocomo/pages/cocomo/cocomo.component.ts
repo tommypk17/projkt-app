@@ -69,6 +69,13 @@ export class CocomoComponent implements OnInit {
     });
   }
 
+  reset(): void {
+    this.cocomo = new CocomoRequest();
+    this.cocomoResults = undefined;
+    this.expandAll();
+    window.scroll(0,0);
+  }
+
   collapseAll(): void{
     this.collapse = true;
   }

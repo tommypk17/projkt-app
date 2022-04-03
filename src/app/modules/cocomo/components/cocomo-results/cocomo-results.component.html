@@ -3,26 +3,38 @@
     <div class="d-flex flex-wrap">
       <div class="mb-2 mr-2">
         <span class="p-float-label">
-          <p-inputNumber [disabled]="true" inputId="adjustedTime" [(ngModel)]="cocomoResults.adjustedTime"></p-inputNumber>
-          <label for="adjustedTime">Adjusted Time (months)</label>
+          <div class="p-inputgroup">
+            <p-inputNumber [disabled]="true" inputId="adjustedTime" [(ngModel)]="cocomoResults.adjustedTime"></p-inputNumber>
+            <label for="adjustedTime">Adjusted Time</label>
+            <span class="p-inputgroup-addon">Months</span>
+          </div>
         </span>
       </div>
       <div class="mb-2 mr-2">
         <span class="p-float-label">
-          <p-inputNumber [disabled]="true" inputId="developmentTime" [(ngModel)]="cocomoResults.developmentTime"></p-inputNumber>
-          <label for="adjustedTime">Development Time (months)</label>
+          <div class="p-inputgroup">
+            <p-inputNumber [disabled]="true" inputId="developmentTime" [(ngModel)]="cocomoResults.developmentTime"></p-inputNumber>
+            <label for="adjustedTime">Development Time</label>
+            <span class="p-inputgroup-addon">Months</span>
+          </div>
         </span>
       </div>
       <div class="mb-2 mr-2">
         <span class="p-float-label">
-          <p-inputNumber [disabled]="true" inputId="staffingTime" [(ngModel)]="cocomoResults.staffingTime"></p-inputNumber>
-          <label for="staffingTime">Staffing (FTEs)</label>
+          <div class="p-inputgroup">
+            <p-inputNumber [disabled]="true" inputId="staffingTime" [(ngModel)]="cocomoResults.staffingTime"></p-inputNumber>
+            <label for="staffingTime">Staffing</label>
+            <span class="p-inputgroup-addon">FTEs</span>
+          </div>
         </span>
       </div>
       <div class="mb-2 mr-2">
         <span class="p-float-label">
-          <p-inputNumber [disabled]="true" inputId="totalHours" [(ngModel)]="cocomoResults.totalHours"></p-inputNumber>
-          <label for="totalHours">Total Hours</label>
+          <div class="p-inputgroup">
+            <p-inputNumber [disabled]="true" inputId="totalHours" [(ngModel)]="cocomoResults.totalHours"></p-inputNumber>
+            <label for="totalHours">Total Time</label>
+            <span class="p-inputgroup-addon">Hours</span>
+          </div>
         </span>
       </div>
     </div>

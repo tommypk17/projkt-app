@@ -11,10 +11,13 @@
   <p-fieldset legend="General Attributes" [toggleable]="true" [collapsed]="collapse">
     <div class="d-flex flex-wrap">
       <div class="mb-2 mr-2">
-        <span class="p-float-label">
-          <p-inputNumber inputId="linesOfCode" [(ngModel)]="cocomo['linesOfCode']"></p-inputNumber>
-          <label for="linesOfCode">Lines of Code</label>
-        </span>
+          <span class="p-float-label">
+            <div class="p-inputgroup">
+              <p-inputNumber inputId="linesOfCode" [(ngModel)]="cocomo['linesOfCode']"></p-inputNumber>
+              <label for="linesOfCode">Lines of Code</label>
+              <span class="p-inputgroup-addon">LoC</span>
+            </div>
+          </span>
       </div>
       <div>
         <span class="p-float-label" style="min-width:275px;">
@@ -65,8 +68,13 @@
     </div>
   </p-fieldset>
   <ng-template pTemplate="footer">
-    <div class="d-flex justify-content-end">
-      <button pButton label="Calculate" (click)="calculate()"></button>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex">
+        <button pButton label="Reset" [disabled]="!cocomoResults" (click)="reset()"></button>
+      </div>
+      <div class="d-flex">
+        <button pButton label="Calculate" (click)="calculate()"></button>
+      </div>
     </div>
   </ng-template>
 </p-card>

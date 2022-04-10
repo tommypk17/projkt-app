@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CocomoComponent } from './cocomo.component';
+import {CocomoService} from "../../../../services/cocomo.service";
+import {MessageService} from "primeng/api";
+import {CocomoModule} from "../../cocomo.module";
+import {AppModule} from "../../../../app.module";
 
 describe('CocomoComponent', () => {
   let component: CocomoComponent;
@@ -8,7 +12,9 @@ describe('CocomoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CocomoComponent ]
+      declarations: [ CocomoComponent ],
+      providers: [CocomoService, MessageService],
+      imports: [AppModule, CocomoModule]
     })
     .compileComponents();
   });

@@ -35,7 +35,7 @@ export class CocomoComponent implements OnInit {
     ];
     this.cocomoModes = [
       {name: 'Organic', mode: 'organic'},
-      {name: 'Semi Organic', mode: 'semiOrganic'},
+      {name: 'Semi Detached', mode: 'semiDetached'},
       {name: 'Detached', mode: 'detached'}
     ]
     this.cocomoService.getRatingNamesByCategory('productAttributes').subscribe((res: KeyValue<string, string>[]) => {

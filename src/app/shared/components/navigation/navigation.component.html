@@ -1,6 +1,6 @@
 <div id="footer-bar">
   <div id="footer-bar-left">
-    <button class="p-button-text p-button-lg" pButton icon="pi pi-bars" (click)="navMenu.toggle($event)"></button>
+    <button class="p-button-text p-button-lg p-button-rounded" pButton icon="pi pi-bars" (click)="navMenu.toggle($event)"></button>
   </div>
   <div id="footer-bar-center">
     <div class="d-flex">
@@ -9,7 +9,10 @@
     </div>
   </div>
   <div id="footer-bar-right">
-    <button class="p-button-text p-button-lg" pButton icon="pi pi-ellipsis-v" (click)="settingMenu.toggle($event)"></button>
+    <button *ngIf="!loggedIn" class="p-button-text p-button-lg p-button-rounded" pButton icon="pi pi-ellipsis-v" (click)="settingMenu.toggle($event)"></button>
+    <p-button *ngIf="loggedIn" styleClass="p-button-text p-button-rounded" (click)="settingMenu.toggle($event)" icon="true">
+        <img style="border-radius: 50%;" src="{{profileImage}}" width="32" referrerpolicy="no-referrer">
+    </p-button>
   </div>
 </div>
 

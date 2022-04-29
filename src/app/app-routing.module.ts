@@ -5,6 +5,7 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
   { path: 'cocomo', loadChildren: () => import('./modules/cocomo/cocomo.module').then(m => m.CocomoModule) },
   { path: 'critical-path', loadChildren: () => import('./modules/critical-path/critical-path.module').then(m => m.CriticalPathModule) },
+  { path: 'auth', loadChildren: () => import('./modules/authorization/authorization.module').then(m => m.AuthorizationModule) },
 ];
 
 @NgModule({

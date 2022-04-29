@@ -15,15 +15,15 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     /* Saving user data in localstorage when logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user: User | null) => {
-      try{
-        const temp: any = JSON.parse(JSON.stringify(user));
+      const temp: any = JSON.parse(JSON.stringify(user));
+      if(temp != null){
         const {apiKey, appName, ...obfuscatedUser} = temp;
         if (obfuscatedUser) {
           localStorage.setItem('user', JSON.stringify(obfuscatedUser));
         } else {
           localStorage.setItem('user', 'null');
         }
-      }catch {
+      }else{
           localStorage.setItem('user', 'null');
       }
     });

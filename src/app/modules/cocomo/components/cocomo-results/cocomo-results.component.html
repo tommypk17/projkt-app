@@ -39,4 +39,22 @@
       </div>
     </div>
   </p-fieldset>
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end" *ngIf="loggedIn">
+      <div class="d-flex">
+        <button pButton label="Save Results" [disabled]="!cocomoResults" (click)="confirmSave.toggle($event)"></button>
+      </div>
+    </div>
+  </ng-template>
 </p-card>
+<p-overlayPanel #confirmSave>
+  <ng-template pTemplate>
+    <div class="p-inputgroup">
+        <span class="p-float-label" style="min-width:275px;">
+          <input type="text" id="input-nameToSave" pInputText #nameToSave />
+        <label for="input-nameToSave">Name</label>
+        </span>
+      <button pButton icon="pi pi-save" [disabled]="invalidName(nameToSave.value)" (click)="saveCocomo(nameToSave.value); confirmSave.hide()"></button>
+    </div>
+  </ng-template>
+</p-overlayPanel>

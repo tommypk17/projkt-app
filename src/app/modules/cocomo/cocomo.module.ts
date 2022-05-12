@@ -10,6 +10,9 @@ import {FormsModule} from "@angular/forms";
 import {FieldsetModule} from "primeng/fieldset";
 import {InputNumberModule} from "primeng/inputnumber";
 import { CocomoResultsComponent } from './components/cocomo-results/cocomo-results.component';
+import {MessagesModule} from "primeng/messages";
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import {InputTextModule} from "primeng/inputtext";
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { CocomoResultsComponent } from './components/cocomo-results/cocomo-resul
     ButtonModule,
     DropdownModule,
     FieldsetModule,
-    InputNumberModule
+    InputNumberModule,
+    MessagesModule,
+    OverlayPanelModule,
+    InputTextModule
   ]
 })
 export class CocomoModule { }

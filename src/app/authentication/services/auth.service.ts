@@ -13,9 +13,9 @@ export class AuthService {
   userData: any;
 
   constructor(
-    public afAuth: AngularFireAuth, // Inject Firebase auth service
-    public router: Router,
-    public ngZone: NgZone,
+    private afAuth: AngularFireAuth, // Inject Firebase auth service
+    private router: Router,
+    private ngZone: NgZone,
     private messageService: MessageService,
   ) {  }
 

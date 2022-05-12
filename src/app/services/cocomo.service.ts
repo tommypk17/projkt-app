@@ -62,6 +62,90 @@ export class CocomoService {
     );
   }
 
+  public saveCOCOMO(nameToSave: string, cocomo: CocomoRequest): Observable<boolean>{
+    let toSave: any = {
+      name: nameToSave,
+      cocomo: cocomo
+    };
+    this.sharedService.queueLoading('saveCOCOMO');
+    return this.http.post<boolean>(environment.apiUrl + '/cocomo/save', toSave).pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<boolean>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('saveCOCOMO');
+      })
+    );
+  }
+
+  public getSavedCOCOMOs(): Observable<CocomoRequest[]> {
+    this.sharedService.queueLoading('getSavedCOCOMOs');
+    return this.http.get<CocomoRequest[]>(environment.apiUrl + '/cocomo/mine').pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<CocomoRequest[]>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('getSavedCOCOMOs');
+      })
+    );
+  }
+
+  public getSavedCOCOMOById(id: string): Observable<CocomoRequest> {
+    this.sharedService.queueLoading('getSavedCOCOMOById');
+    return this.http.get<CocomoRequest>(environment.apiUrl + `/cocomo/mine/${id}`).pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<CocomoRequest>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('getSavedCOCOMOById');
+      })
+    );
+  }
+
+  public getSavedCOCOMONames(): Observable<any> {
+    this.sharedService.queueLoading('getSavedCOCOMONames');
+    return this.http.get<any>(environment.apiUrl + '/cocomo/mine/names').pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('getSavedCOCOMONames');
+      })
+    );
+  }
+
+  public hasSavedCOCOMOs(): Observable<boolean> {
+    this.sharedService.queueLoading('hasSavedCOCOMOs');
+    return this.http.get<boolean>(environment.apiUrl + '/cocomo/mine/exists').pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<boolean>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('hasSavedCOCOMOs');
+      })
+    );
+  }
+
   private handleError(err: any): void {
     console.log('Error: ' + err)
     this.sharedService.clearLoading();

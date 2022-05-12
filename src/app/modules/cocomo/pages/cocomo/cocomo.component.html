@@ -1,3 +1,28 @@
+<ng-container *ngIf="hasSavedCocomos">
+  <p-messages severity="info" [style]="{'margin-bottom': '2em'}">
+    <ng-template pTemplate>
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="d-flex align-items-center">You have saved COCOMOs</h6>
+        <button pButton class="p-button-text" label="View" icon="pi pi-eye" (click)="savedCocomoPanel.toggle($event)"></button>
+      </div>
+    </ng-template>
+  </p-messages>
+  <p-overlayPanel #savedCocomoPanel>
+    <ng-template pTemplate>
+      <div class="d-flex flex-column">
+        <ng-container *ngFor="let savedCocomo of savedCocomos">
+          <div class="d-flex mt-1 mb-1">
+            <button pButton class="p-button-text" icon="pi pi-angle-left" (click)="viewSavedCocomo(savedCocomo.id); savedCocomoPanel.hide()"></button>
+            <div class="d-flex flex-column">
+              <p>{{savedCocomo.name}}</p>
+              <small>{{savedCocomo.date | date: 'M/d/yyyy hh:mm:ss'}}</small>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-template>
+  </p-overlayPanel>
+</ng-container>
 <p-card [style]="{'margin-bottom': '2em'}">
   <ng-template pTemplate="header">
     <div class="mb-2">
@@ -78,4 +103,5 @@
     </div>
   </ng-template>
 </p-card>
-<app-cocomo-results *ngIf="cocomo" [cocomoResults]="cocomoResults"></app-cocomo-results>
+<app-cocomo-results *ngIf="cocomo" [cocomoResults]="cocomoResults" (save)="saveCocomo($event)"></app-cocomo-results>
+

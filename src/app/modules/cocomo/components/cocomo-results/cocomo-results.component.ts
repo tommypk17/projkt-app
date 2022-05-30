@@ -12,6 +12,7 @@ export class CocomoResultsComponent implements OnInit {
   @Input('cocomoResults') cocomoResults: CocomoResponse | undefined;
   @Output('save') save: EventEmitter<string> = new EventEmitter<string>();
   loggedIn: boolean = false;
+  showSaveDialog: boolean = false;
 
   constructor(private authService: AuthService) { }
 

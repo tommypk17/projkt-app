@@ -13,6 +13,7 @@ import { CocomoResultsComponent } from './components/cocomo-results/cocomo-resul
 import {MessagesModule} from "primeng/messages";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {InputTextModule} from "primeng/inputtext";
+import {DialogModule} from "primeng/dialog";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {InputTextModule} from "primeng/inputtext";
     InputNumberModule,
     MessagesModule,
     OverlayPanelModule,
-    InputTextModule
+    InputTextModule,
+    DialogModule
   ]
 })
 export class CocomoModule { }

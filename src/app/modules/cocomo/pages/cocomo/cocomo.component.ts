@@ -108,6 +108,9 @@ export class CocomoComponent implements OnInit {
       this.cocomoService.getSavedCOCOMONames().subscribe((res: any) => {
         if(res){
           this.savedCocomos = res;
+          this.cocomoService.hasSavedCOCOMOs().subscribe((res: boolean) => {
+            this.hasSavedCocomos = res;
+          });
         }
       });
     });

@@ -1,0 +1,48 @@
+<p-card [style]="{'margin-bottom': '2em'}">
+  <ng-template pTemplate="header">
+    <div class="mb-2">
+      <h2>Settings</h2>
+    </div>
+  </ng-template>
+
+</p-card>
+<p-card *ngIf="loggedIn" [style]="{'margin-bottom': '2em'}">
+  <ng-template pTemplate="header">
+    <div class="mb-2">
+      <h2>User Profile</h2>
+    </div>
+  </ng-template>
+  <div class="d-flex">
+    <div class="d-flex flex-column mr-2 justify-content-center">
+      <div class="d-flex mt-1 mb-1">
+          <img style="border-radius: 50%;" src="{{profile!.photoURL}}" width="128" referrerpolicy="no-referrer">
+      </div>
+    </div>
+    <div class="d-flex flex-column ml-2 justify-content-center w-100">
+      <div class="d-flex mt-1 mb-1 w-100">
+        <span class="p-float-label w-100">
+          <input id="email" class="w-100" pInputText [(ngModel)]="profile!.email" [disabled]="true"/>
+          <label for="email">Email</label>
+        </span>
+      </div>
+      <div class="d-flex mt-1 mb-1 w-100">
+        <span class="p-float-label w-100">
+          <input id="displayName" class="w-100" pInputText [(ngModel)]="profile!.displayName" [disabled]="true"/>
+          <label for="displayName">Display Name</label>
+        </span>
+      </div>
+      <div class="d-flex mt-1 mb-1 w-100">
+        <span class="p-float-label w-100">
+          <p-calendar inputId="lastLoginAt" styleClass="w-100" [(ngModel)]="profile!.lastLoginAt" [disabled]="true" [showTime]="true"></p-calendar>
+          <label for="lastLoginAt">Last Login</label>
+        </span>
+      </div>
+      <div class="d-flex mt-1 mb-1 w-100">
+        <span class="p-float-label w-100">
+          <input id="provider" class="w-100" pInputText [(ngModel)]="profile!.provider" [disabled]="true"/>
+          <label for="provider">Auth Provider Service</label>
+        </span>
+      </div>
+    </div>
+  </div>
+</p-card>

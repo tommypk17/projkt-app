@@ -25,6 +25,12 @@ export class AuthService {
     return user !== null ? true : false;
   }
 
+  // Returns user profile info
+  get userProfile(): UserProfile | null {
+    const user: UserProfile = UserProfile.parseFromString(localStorage.getItem('user'));
+    return user;
+  }
+
   // Sign in with Microsoft
   SignInMicrosoft() {
     const provider = new firebase.auth.OAuthProvider('microsoft.com');
@@ -61,5 +67,34 @@ export class AuthService {
       this.messageService.add({key: 'global', severity: 'success', summary: 'Sign Out Successful', detail: 'You have been signed out.'})
       this.router.navigate(['']);
     });
+  }
+}
+
+export class UserProfile {
+  public lastLoginAt?: Date;
+  public email?: string;
+  public displayName?: string;
+  public photoURL?: string;
+  public provider?: string;
+
+  static parseFromString = (profile: string | null): UserProfile => {
+    if(profile == null) return new UserProfile();
+    let user: UserProfile = new UserProfile();
+    let parsed: any;
+    try{
+      parsed = JSON.parse(profile);
+    }catch{
+      return user;
+    }
+    user.email = parsed.email;
+    user.displayName = parsed.displayName;
+    user.photoURL = parsed.photoURL? parsed.photoURL : '/assets/default-account-icon.svg';
+    try{
+      user.lastLoginAt = new Date(Number.parseInt(parsed.lastLoginAt));
+    }catch{}
+    try{
+      user.provider = parsed.providerData[0]?.providerId;
+    }catch{}
+    return user;
   }
 }

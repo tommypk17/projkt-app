@@ -5,6 +5,16 @@
 export const environment = {
   production: false,
   apiUrl: "http://localhost:5000/tkovdev-projkt/us-central1/api",
+  firebase:{
+    apiKey:"xxxxxxxxxxxxxxxxxxxxxxxx",
+    authDomain:"xxxxxxxxxxxxxxxxxxxxxxxx",
+    databaseURL:"xxxxxxxxxxxxxxxxxxxxxxxx",
+    projectId:"xxxxxxxxxxxxxxxxxxxxxxxx",
+    storageBucket:"xxxxxxxx",
+    messagingSenderId:"xxxxxx",
+    appId:"xxxxx",
+    measurementId:"xxxxxxxxxxxxxxxx"
+  }
 };
 
 /*

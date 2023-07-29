@@ -1,1 +1,1 @@
-<div echarts [options]="chartOption" [merge]="updateOption" width="500px"></div>
+<div #chart echarts [options]="chartOption" [merge]="updateOption" (chartClick)="onChartEvent($event, 'chartClick')"  [ngStyle]="{'height.px': graphHeight}"></div>

@@ -16,6 +16,8 @@ import {KeyValue} from "@angular/common";
 })
 export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
+  graphHeight: number = 0;
+
   updateOption: EChartsOption;
   chartOption: EChartsOption = {
     title: {
@@ -29,43 +31,18 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
         type: 'graph',
         layout: 'none',
         symbolSize: 40,
-        roam: true,
+        symbol: 'rect',
+        color: 'lightgrey',
         label: {
           show: true,
         },
-        edgeSymbol: ['circle', 'arrow'],
+        edgeSymbol: ['', 'arrow'],
         edgeSymbolSize: [4, 10],
         edgeLabel: {
           fontSize: 20,
         },
         data: [],
-        links: [
-          // {
-          //   source: 0,
-          //   target: 1,
-          //   symbolSize: [5, 20],
-          // },
-          // {
-          //   source: 'Node 2',
-          //   target: 'Node 1',
-          // },
-          // {
-          //   source: 'Node 1',
-          //   target: 'Node 3',
-          // },
-          // {
-          //   source: 'Node 2',
-          //   target: 'Node 3',
-          // },
-          // {
-          //   source: 'Node 2',
-          //   target: 'Node 4',
-          // },
-          // {
-          //   source: 'Node 1',
-          //   target: 'Node 4',
-          // },
-        ],
+        links: [],
         lineStyle: {
           opacity: 0.9,
           width: 2,
@@ -85,24 +62,43 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
     this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
       let nodes = res.nodes;
       let edges = res.edges;
+      let criticalPathNodes = res.criticalPathNodes;
       let coordinates = this.calculatePositions(nodes, edges);
       let height = 0;
       let width = 0;
+
       coordinates.forEach(coordinate => {
         if(height < coordinate.y) height = coordinate.y;
         if(width < coordinate.x) width = coordinate.x;
       });
-      console.log(width, height)
-      // console.log(coordinates)
+
+      this.graphHeight = height + 80 < window.innerHeight? height + 80 : window.innerHeight;
+
       this.updateOption = {
         series: {
-          data: nodes.map(x => ({id: x.id, name: x.name, value: x.duration, x: coordinates.get(x.id).x, y: coordinates.get(x.id).y})),
-          edges: edges.map(x => ({source: x.from, target: x.to})),
+          data: nodes.map((x, i) => ({
+            id: x.id,
+            name: x.name,
+            value: x.duration,
+            category: criticalPathNodes.some(y => x.id == y.id)? 'cp': '', x: coordinates.get(x.id).x, y: coordinates.get(x.id).y
+          })),
+          edges: edges.map(x => ({
+            source: x.from,
+            target: x.to,
+            lineStyle: {
+              color: criticalPathNodes.some(y => y.id == x.from) && criticalPathNodes.some(y => y.id == x.to)? '#4939c9' : '#b2b2b2'
+            }
+          })),
           height: height,
-          width: width,
+          roam: true,
+          categories: [
+            {
+              name: 'cp',
+              itemStyle: {color: '#4939c9'}
+            }
+          ]
         }
       }
-      // console.log(res);
     });
   }
 
@@ -130,6 +126,14 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
       // console.log(coordinates)
 
     return coordinates;
+  }
+
+  onChartEvent(event: any, type: string) {
+    if(type == 'chartClick') this.chartClick(event);
+  }
+
+  private chartClick(event: any){
+    console.log(event)
   }
 
 }

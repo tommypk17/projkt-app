@@ -17,6 +17,7 @@ export class CriticalPathEdge {
 export class FlatCriticalPath {
   nodes: CriticalPathNode[];
   edges: CriticalPathEdge[];
+  criticalPathNodes: CriticalPathNode[];
 }
 
 export class CriticalPathCoordinate {

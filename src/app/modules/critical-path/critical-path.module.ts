@@ -6,6 +6,7 @@ import { AoaComponent } from './pages/aoa/aoa.component';
 import { AonComponent } from './pages/aon/aon.component';
 import { CriticalPathNodeComponent } from './components/critical-path-node/critical-path-node.component';
 import { CriticalPathGraphComponent } from './components/critical-path-graph/critical-path-graph.component';
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,15 @@ import { CriticalPathGraphComponent } from './components/critical-path-graph/cri
   ],
   imports: [
     CommonModule,
-    CriticalPathRoutingModule
+    CriticalPathRoutingModule,
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+    }),
   ]
 })
 export class CriticalPathModule { }

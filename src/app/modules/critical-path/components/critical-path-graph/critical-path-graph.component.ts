@@ -1,5 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {CriticalPathNode} from "../critical-path-node/critical-path-node.component";
+import {EChartsOption} from "echarts";
+import {CriticalPathService} from "../../../../services/critical-path.service";
+import {
+  FlatCriticalPath,
+  CriticalPathNode,
+  CriticalPathEdge,
+  CriticalPathCoordinate
+} from "../../../../shared/models/CPM";
+import {KeyValue} from "@angular/common";
 
 @Component({
   selector: 'app-critical-path-graph',
@@ -8,124 +16,122 @@ import {CriticalPathNode} from "../critical-path-node/critical-path-node.compone
 })
 export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
+  updateOption: EChartsOption;
+  chartOption: EChartsOption = {
+    title: {
+      text: 'Critical Path',
+    },
+    tooltip: {},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series: [
+      {
+        type: 'graph',
+        layout: 'none',
+        symbolSize: 40,
+        roam: true,
+        label: {
+          show: true,
+        },
+        edgeSymbol: ['circle', 'arrow'],
+        edgeSymbolSize: [4, 10],
+        edgeLabel: {
+          fontSize: 20,
+        },
+        data: [],
+        links: [
+          // {
+          //   source: 0,
+          //   target: 1,
+          //   symbolSize: [5, 20],
+          // },
+          // {
+          //   source: 'Node 2',
+          //   target: 'Node 1',
+          // },
+          // {
+          //   source: 'Node 1',
+          //   target: 'Node 3',
+          // },
+          // {
+          //   source: 'Node 2',
+          //   target: 'Node 3',
+          // },
+          // {
+          //   source: 'Node 2',
+          //   target: 'Node 4',
+          // },
+          // {
+          //   source: 'Node 1',
+          //   target: 'Node 4',
+          // },
+        ],
+        lineStyle: {
+          opacity: 0.9,
+          width: 2,
+          curveness: 0,
+        },
+      },
+    ],
+  };
+
   private _edges: {from: string, to: string}[] | undefined
   private _nodes: CriticalPathNode[] | undefined;
-  constructor() { }
+  constructor(private criticalPathService: CriticalPathService) { }
 
   ngAfterViewInit(): void {
   }
   ngOnInit(): void {
+    this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
+      let nodes = res.nodes;
+      let edges = res.edges;
+      let coordinates = this.calculatePositions(nodes, edges);
+      let height = 0;
+      let width = 0;
+      coordinates.forEach(coordinate => {
+        if(height < coordinate.y) height = coordinate.y;
+        if(width < coordinate.x) width = coordinate.x;
+      });
+      console.log(width, height)
+      // console.log(coordinates)
+      this.updateOption = {
+        series: {
+          data: nodes.map(x => ({id: x.id, name: x.name, value: x.duration, x: coordinates.get(x.id).x, y: coordinates.get(x.id).y})),
+          edges: edges.map(x => ({source: x.from, target: x.to})),
+          height: height,
+          width: width,
+        }
+      }
+      // console.log(res);
+    });
   }
 
+  calculatePositions(nodes: CriticalPathNode[], edges: CriticalPathEdge[]): Map<string, CriticalPathCoordinate> {
+    let coordinates: Map<string, CriticalPathCoordinate> = new Map<string, CriticalPathCoordinate>();
 
-
-  exData: CriticalPathNode = {
-    id: "650e6b20-a4ed-4d78-b85b-ddc4253db47f",
-    name: "end",
-    duration: 0,
-    previous: [
-      {
-        id: "6ae8b073-b15f-466a-b4ee-6f6b1505a7a4",
-        name: "N",
-        duration: 6,
-        previous: [
-          {
-            id: "53a5f587-3f66-4ef3-9119-de7635f4bdb2",
-            name: "L",
-            duration: 5,
-            previous: [
-              {
-                id: "a60b2965-4da6-4dd8-aeff-e5dde8f9242d",
-                name: "J",
-                duration: 8,
-                previous: [
-                  {
-                    id: "20207e92-d854-4a2f-8c9b-04d43715e296",
-                    name: "F",
-                    duration: 5,
-                    previous: [
-                      {
-                        id: "1d5ac8c8-35b1-43ba-8d6f-ad650e8cade9",
-                        name: "E",
-                        duration: 4,
-                        previous: [
-                          {
-                            id: "033126a5-ac9f-4cef-a79a-3c9009736b06",
-                            name: "C",
-                            duration: 10,
-                            previous: [
-                              {
-                                id: "722e1a1b-0937-4645-9e70-d4d0b86c54e7",
-                                name: "B",
-                                duration: 4,
-                                previous: [
-                                  {
-                                    id: "efb2f142-31eb-40f6-ac73-0d1109bba97a",
-                                    name: "A",
-                                    duration: 2,
-                                    previous: null,
-                                    earlyStart: 0,
-                                    earlyFinish: 2,
-                                    lateFinish: 2,
-                                    lateStart: 0,
-                                    float: 0
-                                  }
-                                ],
-                                earlyStart: 2,
-                                earlyFinish: 6,
-                                lateFinish: 6,
-                                lateStart: 2,
-                                float: 0
-                              }
-                            ],
-                            earlyStart: 6,
-                            earlyFinish: 16,
-                            lateFinish: 16,
-                            lateStart: 6,
-                            float: 0
-                          }
-                        ],
-                        earlyStart: 16,
-                        earlyFinish: 20,
-                        lateFinish: 20,
-                        lateStart: 16,
-                        float: 0
-                      }
-                    ],
-                    earlyStart: 20,
-                    earlyFinish: 25,
-                    lateFinish: 25,
-                    lateStart: 20,
-                    float: 0
-                  }
-                ],
-                earlyStart: 25,
-                earlyFinish: 33,
-                lateFinish: 33,
-                lateStart: 25,
-                float: 0
-              }
-            ],
-            earlyStart: 33,
-            earlyFinish: 38,
-            lateFinish: 38,
-            lateStart: 33,
-            float: 0
-          }
-        ],
-        earlyStart: 38,
-        earlyFinish: 44,
-        lateFinish: 44,
-        lateStart: 38,
-        float: 0
+    let currentLevel: CriticalPathNode[] = nodes.filter(x => !edges.some(y => y.to == x.id));
+    let nextLevel: CriticalPathNode[] = [];
+    let x: number = 0;
+    let y: number = 0;
+    let complete: boolean = false;
+    let count = 0;
+    while(!complete){
+      x = 0;
+      for(let node of currentLevel){
+        coordinates.set(node.id, {x, y});
+        nextLevel = nextLevel.concat(nodes.filter(x => edges.filter(y => y.from == node.id).some(y => y.to == x.id)));
+        x = x + 60;
       }
-    ],
-    earlyStart: 44,
-    earlyFinish: 44,
-    lateStart: 44,
-    lateFinish: 44,
-    float: 0
-  };
+      y = y + 60;
+      currentLevel = nextLevel;
+      if(nextLevel.length <= 0) complete = true;
+      nextLevel = [];
+    }
+      // console.log(coordinates)
+
+    return coordinates;
+  }
+
 }
 
 

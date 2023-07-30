@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {EChartsOption} from "echarts";
 import {CriticalPathService} from "../../../../services/critical-path.service";
 import {
@@ -7,7 +7,6 @@ import {
   CriticalPathEdge,
   CriticalPathCoordinate
 } from "../../../../shared/models/CPM";
-import {KeyValue} from "@angular/common";
 
 @Component({
   selector: 'app-critical-path-graph',
@@ -54,6 +53,10 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
   private _edges: {from: string, to: string}[] | undefined
   private _nodes: CriticalPathNode[] | undefined;
+
+  protected selectedNode: CriticalPathNode | undefined;
+  protected nodeDetailsVisible: boolean = false;
+
   constructor(private criticalPathService: CriticalPathService) { }
 
   ngAfterViewInit(): void {
@@ -67,6 +70,9 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
       let height = 0;
       let width = 0;
 
+      this._nodes = nodes;
+      this._edges = edges;
+
       coordinates.forEach(coordinate => {
         if(height < coordinate.y) height = coordinate.y;
         if(width < coordinate.x) width = coordinate.x;
@@ -76,7 +82,7 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
       this.updateOption = {
         series: {
-          data: nodes.map((x, i) => ({
+          data: nodes.map(x => ({
             id: x.id,
             name: x.name,
             value: x.duration,
@@ -110,7 +116,6 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
     let x: number = 0;
     let y: number = 0;
     let complete: boolean = false;
-    let count = 0;
     while(!complete){
       x = 0;
       for(let node of currentLevel){
@@ -133,7 +138,10 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
   }
 
   private chartClick(event: any){
-    console.log(event)
+    if(event && event.data){
+      this.selectedNode = this._nodes.find(x => x.id == event.data.id);
+      this.nodeDetailsVisible = true;
+    }
   }
 
 }

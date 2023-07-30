@@ -7,6 +7,9 @@ import { AonComponent } from './pages/aon/aon.component';
 import { CriticalPathNodeComponent } from './components/critical-path-node/critical-path-node.component';
 import { CriticalPathGraphComponent } from './components/critical-path-graph/critical-path-graph.component';
 import {NgxEchartsModule} from "ngx-echarts";
+import { SidebarModule } from 'primeng/sidebar';
+import {InputTextModule} from "primeng/inputtext";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,6 +20,7 @@ import {NgxEchartsModule} from "ngx-echarts";
   ],
   imports: [
     CommonModule,
+    FormsModule,
     CriticalPathRoutingModule,
     NgxEchartsModule.forRoot({
       /**
@@ -26,6 +30,8 @@ import {NgxEchartsModule} from "ngx-echarts";
        */
       echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
     }),
+    SidebarModule,
+    InputTextModule
   ]
 })
 export class CriticalPathModule { }

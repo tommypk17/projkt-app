@@ -3,6 +3,10 @@
   <ng-template pTemplate="header">Node Details</ng-template>
   <div class="mt-2" *ngIf="selectedNode != undefined">
     <span class="p-float-label mt-1">
+        <input pInputText id="id" [(ngModel)]="selectedNode.id" disabled/>
+        <label for="id">ID</label>
+    </span>
+    <span class="p-float-label mt-1">
         <input pInputText id="name" [(ngModel)]="selectedNode.name" disabled/>
         <label for="name">Name</label>
     </span>

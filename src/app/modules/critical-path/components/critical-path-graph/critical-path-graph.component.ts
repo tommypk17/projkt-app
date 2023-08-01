@@ -66,7 +66,7 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
       let nodes = res.nodes;
       let edges = res.edges;
       let criticalPathNodes = res.criticalPathNodes;
-      let coordinates = this.calculatePositions(nodes, edges);
+      let coordinates = this.calculatePositions(nodes, edges, criticalPathNodes);
       let height = 0;
       let width = 0;
 
@@ -80,13 +80,17 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
       this.graphHeight = height + 80 < window.innerHeight? height + 80 : window.innerHeight;
 
+
       this.updateOption = {
         series: {
+          draggable: true,
           data: nodes.map(x => ({
             id: x.id,
             name: x.name,
             value: x.duration,
-            category: criticalPathNodes.some(y => x.id == y.id)? 'cp': '', x: coordinates.get(x.id).x, y: coordinates.get(x.id).y
+            category: criticalPathNodes.some(y => x.id == y.id)? 'cp': '',
+            x: coordinates.get(x.id) != undefined? coordinates.get(x.id).x : 0,
+            y: coordinates.get(x.id) != undefined? coordinates.get(x.id).y: 0
           })),
           edges: edges.map(x => ({
             source: x.from,
@@ -108,28 +112,40 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
     });
   }
 
-  calculatePositions(nodes: CriticalPathNode[], edges: CriticalPathEdge[]): Map<string, CriticalPathCoordinate> {
+  calculatePositions(nodes: CriticalPathNode[], edges: CriticalPathEdge[], criticalPath: CriticalPathNode[]): Map<string, CriticalPathCoordinate> {
     let coordinates: Map<string, CriticalPathCoordinate> = new Map<string, CriticalPathCoordinate>();
-
     let currentLevel: CriticalPathNode[] = nodes.filter(x => !edges.some(y => y.to == x.id));
-    let nextLevel: CriticalPathNode[] = [];
+    let currentLevelEdges: CriticalPathEdge[] = edges.filter(x => currentLevel.some(y => y.id == x.from));
     let x: number = 0;
     let y: number = 0;
+    let endNode: CriticalPathNode = nodes.find(x => x.name == 'end');
     let complete: boolean = false;
     while(!complete){
       x = 0;
+      currentLevel = currentLevel.sort((node1, node2) => {
+        if(criticalPath.findIndex(x => x.id == node1.id) > -1) return -1;
+        return 1;
+      });
       for(let node of currentLevel){
         coordinates.set(node.id, {x, y});
-        nextLevel = nextLevel.concat(nodes.filter(x => edges.filter(y => y.from == node.id).some(y => y.to == x.id)));
         x = x + 60;
       }
-      y = y + 60;
-      currentLevel = nextLevel;
-      if(nextLevel.length <= 0) complete = true;
-      nextLevel = [];
-    }
-      // console.log(coordinates)
 
+      //set the current level to the next level
+      currentLevel = nodes.filter(x => edges.filter(y => currentLevel.some(z => z.id == y.from)).some(z => z.to == x.id))
+      //set the current level edges to the next level edges
+      currentLevelEdges = edges.filter(x => currentLevel.some(y => y.id == x.from));
+      //ignore any nodes in the next level that are referenced within the same level
+      let ignore = currentLevelEdges.filter(x => currentLevelEdges.some(y => x.to == y.from));
+      currentLevel = currentLevel.filter(x => !ignore.some(y => y.to == x.id))
+      if(currentLevel.some(x => x.id == endNode.id) && !currentLevel.every(x => x.id == endNode.id)){
+        currentLevel = currentLevel.filter(x => x.id != endNode.id)
+        currentLevelEdges = currentLevelEdges.filter(x => x.to != endNode.id)
+      }
+      y = y + 60;
+      if(currentLevel.length <= 0) complete = true;
+
+    }
     return coordinates;
   }
 

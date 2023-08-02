@@ -1,1 +1,7 @@
-<app-critical-path-graph></app-critical-path-graph>
+<div class="d-flex">
+  <app-critical-path-graph class="w-100"></app-critical-path-graph>
+  <p-menu [model]="menu"></p-menu>
+  <p-dialog header="Critical Path Table" [modal]="true" [(visible)]="dialogVisible">
+    <app-critical-path-table></app-critical-path-table>
+  </p-dialog>
+</div>

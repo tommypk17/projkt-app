@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MenuItem} from "primeng/api";
+import {OverlayPanel} from "primeng/overlaypanel";
+import {Menu} from "primeng/menu";
+import {Dialog} from "primeng/dialog";
 
 @Component({
   selector: 'app-aon',
@@ -7,9 +11,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AonComponent implements OnInit {
 
+  dialogVisible: boolean = false;
+
+  menu: MenuItem[] = [
+    {
+      label: 'Critical Path',
+      items : [
+        {
+          label: 'View Table',
+          icon: 'pi pi-fw pi-table',
+          command: (event) => this.dialogVisible = true
+        },
+        {
+          label: 'Add',
+          icon: 'pi pi-fw pi-plus'
+        },
+        {
+          label: 'Save',
+          icon: 'pi pi-fw pi-save'
+        },
+        {
+          label: 'Delete',
+          icon: 'pi pi-fw pi-trash',
+        }
+      ]
+    },
+    {
+      separator: true
+    },
+    {
+      label: 'Graph',
+      items: [
+        {
+          label: 'New',
+          icon: 'pi pi-fw pi-refresh'
+        },
+        {
+          label: 'Load',
+          icon: 'pi pi-fw pi-folder-open'
+        },
+      ]
+    }
+  ];
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  newCriticalPath(): void {
+
   }
 
 }

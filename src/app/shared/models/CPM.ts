@@ -7,6 +7,7 @@ export class CriticalPathNode {
   lateStart: number;
   lateFinish: number;
   float: number;
+  predecessors: CriticalPathNode[] | undefined;
 }
 
 export class CriticalPathEdge {

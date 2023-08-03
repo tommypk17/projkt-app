@@ -17,6 +17,7 @@ import { MenuModule } from 'primeng/menu';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TableModule } from 'primeng/table';
     MenuModule,
     OverlayPanelModule,
     DialogModule,
-    TableModule
+    TableModule,
+    MultiSelectModule
   ]
 })
 export class CriticalPathModule { }

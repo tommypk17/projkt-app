@@ -15,6 +15,9 @@ export class CriticalPathTableComponent implements OnInit{
 
   ngOnInit(): void {
     this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
+      for(let node of res.nodes){
+        node.predecessors = this.predecessors(res.nodes, res.edges, node);
+      }
       this.graph = res;
     });
   }
@@ -27,5 +30,20 @@ export class CriticalPathTableComponent implements OnInit{
 
   predecessorNames(nodes: CriticalPathNode[]): string[] {
     return nodes.map(x => x.name);
+  }
+
+  clonedProducts: { [s: string]: CriticalPathNode } = {};
+
+  onRowEditInit(product: CriticalPathNode) {
+    this.clonedProducts[product.id as string] = { ...product };
+  }
+
+  onRowEditSave(product: CriticalPathNode) {
+    delete this.clonedProducts[product.id as string];
+  }
+
+  onRowEditCancel(product: CriticalPathNode, index: number) {
+    this.graph.nodes[index] = this.clonedProducts[product.id as string];
+    delete this.clonedProducts[product.id as string];
   }
 }

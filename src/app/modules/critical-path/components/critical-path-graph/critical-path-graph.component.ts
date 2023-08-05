@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, Output} from '@angular/core';
 import {EChartsOption} from "echarts";
 import {CriticalPathService} from "../../../../services/critical-path.service";
 import {
@@ -7,6 +7,7 @@ import {
   CriticalPathEdge,
   CriticalPathCoordinate
 } from "../../../../shared/models/CPM";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-critical-path-graph',
@@ -15,17 +16,25 @@ import {
 })
 export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
-  graphHeight: number = 0;
+  protected graphHeight: number = 0;
 
-  updateOption: EChartsOption;
-  chartOption: EChartsOption = {
-    title: {
-      text: 'Critical Path',
-    },
-    tooltip: {},
-    animationDurationUpdate: 1500,
-    animationEasingUpdate: 'quinticInOut',
-    series: [
+  protected updateOption: EChartsOption;
+  protected chartOption: EChartsOption;
+
+  private _edges: {from: string, to: string}[] | undefined
+  private _nodes: CriticalPathNode[] | undefined;
+
+  @Output('nodeSelected') nodeSelected: Subject<CriticalPathNode> = new Subject<CriticalPathNode>();
+
+  constructor(private criticalPathService: CriticalPathService) {
+    this.chartOption = {
+      title: {
+        text: 'Critical Path',
+      },
+      tooltip: {},
+      animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+      series: [
       {
         type: 'graph',
         layout: 'none',
@@ -49,19 +58,16 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
         },
       },
     ],
-  };
-
-  private _edges: {from: string, to: string}[] | undefined
-  private _nodes: CriticalPathNode[] | undefined;
-
-  protected selectedNode: CriticalPathNode | undefined;
-  protected nodeDetailsVisible: boolean = false;
-
-  constructor(private criticalPathService: CriticalPathService) { }
+    };
+  }
 
   ngAfterViewInit(): void {
   }
+
   ngOnInit(): void {
+  }
+
+  loadGraph(): void {
     this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
       let nodes = res.nodes;
       let edges = res.edges;
@@ -155,8 +161,7 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
   private chartClick(event: any){
     if(event && event.data){
-      this.selectedNode = this._nodes.find(x => x.id == event.data.id);
-      this.nodeDetailsVisible = true;
+      this.nodeSelected.next(this._nodes.find(x => x.id == event.data.id))
     }
   }
 

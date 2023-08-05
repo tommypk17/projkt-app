@@ -25,3 +25,9 @@ export class CriticalPathCoordinate {
   x: number;
   y: number;
 }
+
+export class CriticalPathGraph {
+  id: string;
+  name: string;
+  date: Date;
+}

@@ -18,6 +18,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import {MultiSelectModule} from "primeng/multiselect";
+import { CriticalPathFormComponent } from './components/critical-path-form/critical-path-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {MultiSelectModule} from "primeng/multiselect";
     AonComponent,
     CriticalPathNodeComponent,
     CriticalPathGraphComponent,
-    CriticalPathTableComponent
+    CriticalPathTableComponent,
+    CriticalPathFormComponent
   ],
   imports: [
     CommonModule,

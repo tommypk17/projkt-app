@@ -1,0 +1,34 @@
+  <div class="mt-2" *ngIf="node != undefined">
+    <span class="p-float-label mt-1">
+        <input pInputText id="id" [(ngModel)]="node.id" disabled/>
+        <label for="id">ID</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="name" [(ngModel)]="node.name" disabled/>
+        <label for="name">Name</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="duration" [(ngModel)]="node.duration" disabled/>
+        <label for="duration">Duration</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="earlyStart" [(ngModel)]="node.earlyStart" disabled/>
+        <label for="earlyStart">Early Start</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="earlyFinish" [(ngModel)]="node.earlyFinish" disabled/>
+        <label for="earlyFinish">Early Finish</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="lateStart" [(ngModel)]="node.lateStart" disabled/>
+        <label for="lateStart">Late Start</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="lateFinish" [(ngModel)]="node.lateFinish" disabled/>
+        <label for="lateFinish">Late Finish</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="float" [(ngModel)]="node.float" disabled/>
+        <label for="float">Float</label>
+    </span>
+  </div>

@@ -3,9 +3,10 @@ import {MenuItem} from "primeng/api";
 import {OverlayPanel} from "primeng/overlaypanel";
 import {Menu} from "primeng/menu";
 import {Dialog} from "primeng/dialog";
-import {CriticalPathGraph, CriticalPathNode} from "../../../../shared/models/CPM";
+import {CriticalPathGraph, CriticalPathNode, FlatCriticalPath} from "../../../../shared/models/CPM";
 import {CriticalPathGraphComponent} from "../../components/critical-path-graph/critical-path-graph.component";
 import {CriticalPathService} from "../../../../services/critical-path.service";
+import {CriticalPathTableComponent} from "../../components/critical-path-table/critical-path-table.component";
 
 @Component({
   selector: 'app-aon',
@@ -14,6 +15,7 @@ import {CriticalPathService} from "../../../../services/critical-path.service";
 })
 export class AonComponent implements OnInit, AfterViewInit {
   @ViewChild('graph') graph: CriticalPathGraphComponent;
+  @ViewChild('table') table: CriticalPathTableComponent;
   @ViewChild('loadPanel') loadPanel: OverlayPanel;
 
   dialogVisible: boolean = false;
@@ -87,7 +89,10 @@ export class AonComponent implements OnInit, AfterViewInit {
   }
 
   loadSavedCriticalPath(id: string): void {
-    this.graph.loadGraph(id);
+    this.criticalPathService.getCriticalPath(id).subscribe((res: FlatCriticalPath) => {
+      this.table.loadGraph(res);
+      this.graph.loadGraph(res);
+    });
   }
 
 }

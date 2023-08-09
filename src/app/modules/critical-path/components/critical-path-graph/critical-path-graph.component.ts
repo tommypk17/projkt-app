@@ -67,55 +67,53 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
-  loadGraph(id: string): void {
-    this.criticalPathService.getCriticalPath(id).subscribe((res: FlatCriticalPath) => {
-      let nodes = res.nodes;
-      let edges = res.edges;
-      let criticalPathNodes = res.criticalPathNodes;
-      let coordinates = this.calculatePositions(nodes, edges, criticalPathNodes);
-      let height = 0;
-      let width = 0;
+  loadGraph(criticalPath: FlatCriticalPath): void {
+    let nodes = criticalPath.nodes;
+    let edges = criticalPath.edges;
+    let criticalPathNodes = criticalPath.criticalPathNodes;
+    let coordinates = this.calculatePositions(nodes, edges, criticalPathNodes);
+    let height = 0;
+    let width = 0;
 
-      this._nodes = nodes;
-      this._edges = edges;
+    this._nodes = nodes;
+    this._edges = edges;
 
-      coordinates.forEach(coordinate => {
-        if(height < coordinate.y) height = coordinate.y;
-        if(width < coordinate.x) width = coordinate.x;
-      });
-
-      this.graphHeight = height + 80 < window.innerHeight? height + 80 : window.innerHeight;
-
-
-      this.updateOption = {
-        series: {
-          draggable: true,
-          data: nodes.map(x => ({
-            id: x.id,
-            name: x.name,
-            value: x.duration,
-            category: criticalPathNodes.some(y => x.id == y.id)? 'cp': '',
-            x: coordinates.get(x.id) != undefined? coordinates.get(x.id).x : 0,
-            y: coordinates.get(x.id) != undefined? coordinates.get(x.id).y: 0
-          })),
-          edges: edges.map(x => ({
-            source: x.from,
-            target: x.to,
-            lineStyle: {
-              color: criticalPathNodes.some(y => y.id == x.from) && criticalPathNodes.some(y => y.id == x.to)? '#4939c9' : '#b2b2b2'
-            }
-          })),
-          height: height,
-          roam: true,
-          categories: [
-            {
-              name: 'cp',
-              itemStyle: {color: '#4939c9'}
-            }
-          ]
-        }
-      }
+    coordinates.forEach(coordinate => {
+      if(height < coordinate.y) height = coordinate.y;
+      if(width < coordinate.x) width = coordinate.x;
     });
+
+    this.graphHeight = height + 80 < window.innerHeight? height + 80 : window.innerHeight;
+
+
+    this.updateOption = {
+      series: {
+        draggable: true,
+        data: nodes.map(x => ({
+          id: x.id,
+          name: x.name,
+          value: x.duration,
+          category: criticalPathNodes.some(y => x.id == y.id)? 'cp': '',
+          x: coordinates.get(x.id) != undefined? coordinates.get(x.id).x : 0,
+          y: coordinates.get(x.id) != undefined? coordinates.get(x.id).y: 0
+        })),
+        edges: edges.map(x => ({
+          source: x.from,
+          target: x.to,
+          lineStyle: {
+            color: criticalPathNodes.some(y => y.id == x.from) && criticalPathNodes.some(y => y.id == x.to)? '#4939c9' : '#b2b2b2'
+          }
+        })),
+        height: height,
+        roam: true,
+        categories: [
+          {
+            name: 'cp',
+            itemStyle: {color: '#4939c9'}
+          }
+        ]
+      }
+    }
   }
 
   calculatePositions(nodes: CriticalPathNode[], edges: CriticalPathEdge[], criticalPath: CriticalPathNode[]): Map<string, CriticalPathCoordinate> {

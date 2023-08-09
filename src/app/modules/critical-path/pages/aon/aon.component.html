@@ -20,7 +20,7 @@
     </ng-template>
   </p-overlayPanel>
   <p-dialog header="Critical Path Table" [modal]="true" [(visible)]="dialogVisible">
-    <app-critical-path-table></app-critical-path-table>
+    <app-critical-path-table #table></app-critical-path-table>
   </p-dialog>
 </div>
 <p-sidebar [(visible)]="nodeDetailsVisible">

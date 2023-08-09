@@ -8,18 +8,12 @@ import {CriticalPathService} from "../../../../services/critical-path.service";
   styleUrls: ['./critical-path-table.component.scss']
 })
 export class CriticalPathTableComponent implements OnInit{
-  @Input('graph') graph: FlatCriticalPath;
+  protected graph: FlatCriticalPath;
 
   constructor(private criticalPathService: CriticalPathService) {
   }
 
   ngOnInit(): void {
-    // this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
-    //   for(let node of res.nodes){
-    //     node.predecessors = this.predecessors(res.nodes, res.edges, node);
-    //   }
-    //   this.graph = res;
-    // });
   }
 
   predecessors(nodes: CriticalPathNode[], edges: CriticalPathEdge[], currentNode: CriticalPathNode): CriticalPathNode[] {
@@ -45,5 +39,12 @@ export class CriticalPathTableComponent implements OnInit{
   onRowEditCancel(product: CriticalPathNode, index: number) {
     this.graph.nodes[index] = this.clonedProducts[product.id as string];
     delete this.clonedProducts[product.id as string];
+  }
+
+  loadGraph(criticalPath: FlatCriticalPath): void {
+      for(let node of criticalPath.nodes){
+        node.predecessors = this.predecessors(criticalPath.nodes, criticalPath.edges, node);
+      }
+      this.graph = criticalPath;
   }
 }

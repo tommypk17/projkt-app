@@ -1,34 +1,38 @@
   <div class="mt-2" *ngIf="node != undefined">
     <span class="p-float-label mt-1">
-        <input pInputText id="id" [(ngModel)]="node.id" disabled/>
+        <input pInputText id="id" [(ngModel)]="node.id" class="w-100" disabled/>
         <label for="id">ID</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="name" [(ngModel)]="node.name" disabled/>
+        <input pInputText id="name" [(ngModel)]="node.name" class="w-100" disabled/>
         <label for="name">Name</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="duration" [(ngModel)]="node.duration" disabled/>
+        <input pInputText id="duration" [(ngModel)]="node.duration" class="w-100" disabled/>
         <label for="duration">Duration</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="earlyStart" [(ngModel)]="node.earlyStart" disabled/>
+        <p-multiSelect styleClass="w-100" [options]="allNodes" [(ngModel)]="node.predecessors" optionLabel="name" optionLabel="name" [disabled]="true"></p-multiSelect>
+        <label for="duration">Previous</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="earlyStart" [(ngModel)]="node.earlyStart" class="w-100" disabled/>
         <label for="earlyStart">Early Start</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="earlyFinish" [(ngModel)]="node.earlyFinish" disabled/>
+        <input pInputText id="earlyFinish" [(ngModel)]="node.earlyFinish" class="w-100" disabled/>
         <label for="earlyFinish">Early Finish</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="lateStart" [(ngModel)]="node.lateStart" disabled/>
+        <input pInputText id="lateStart" [(ngModel)]="node.lateStart" class="w-100" disabled/>
         <label for="lateStart">Late Start</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="lateFinish" [(ngModel)]="node.lateFinish" disabled/>
+        <input pInputText id="lateFinish" [(ngModel)]="node.lateFinish" class="w-100" disabled/>
         <label for="lateFinish">Late Finish</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="float" [(ngModel)]="node.float" disabled/>
+        <input pInputText id="float" [(ngModel)]="node.float" class="w-100" disabled/>
         <label for="float">Float</label>
     </span>
   </div>

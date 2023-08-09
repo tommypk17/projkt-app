@@ -7,6 +7,7 @@ import {CriticalPathGraph, CriticalPathNode, FlatCriticalPath} from "../../../..
 import {CriticalPathGraphComponent} from "../../components/critical-path-graph/critical-path-graph.component";
 import {CriticalPathService} from "../../../../services/critical-path.service";
 import {CriticalPathTableComponent} from "../../components/critical-path-table/critical-path-table.component";
+import {CriticalPathFormComponent} from "../../components/critical-path-form/critical-path-form.component";
 
 @Component({
   selector: 'app-aon',
@@ -16,6 +17,7 @@ import {CriticalPathTableComponent} from "../../components/critical-path-table/c
 export class AonComponent implements OnInit, AfterViewInit {
   @ViewChild('graph') graph: CriticalPathGraphComponent;
   @ViewChild('table') table: CriticalPathTableComponent;
+  @ViewChild('form') form: CriticalPathFormComponent;
   @ViewChild('loadPanel') loadPanel: OverlayPanel;
 
   dialogVisible: boolean = false;
@@ -92,6 +94,7 @@ export class AonComponent implements OnInit, AfterViewInit {
     this.criticalPathService.getCriticalPath(id).subscribe((res: FlatCriticalPath) => {
       this.table.loadGraph(res);
       this.graph.loadGraph(res);
+      this.form.loadGraph(res);
     });
   }
 

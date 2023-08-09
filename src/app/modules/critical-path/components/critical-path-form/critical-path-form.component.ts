@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CriticalPathNode} from "../../../../shared/models/CPM";
+import {CriticalPathNode, FlatCriticalPath} from "../../../../shared/models/CPM";
 
 @Component({
   selector: 'app-critical-path-form',
@@ -8,11 +8,15 @@ import {CriticalPathNode} from "../../../../shared/models/CPM";
 })
 export class CriticalPathFormComponent implements OnInit{
   @Input('node') node: CriticalPathNode | undefined;
-
+  allNodes: CriticalPathNode[] = [];
 
   ngOnInit() {
   }
 
   constructor() {
+  }
+
+  loadGraph(criticalPath: FlatCriticalPath): void {
+    this.allNodes = criticalPath.nodes;
   }
 }

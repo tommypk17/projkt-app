@@ -5,6 +5,7 @@ import {Menu} from "primeng/menu";
 import {Dialog} from "primeng/dialog";
 import {CriticalPathGraph, CriticalPathNode} from "../../../../shared/models/CPM";
 import {CriticalPathGraphComponent} from "../../components/critical-path-graph/critical-path-graph.component";
+import {CriticalPathService} from "../../../../services/critical-path.service";
 
 @Component({
   selector: 'app-aon',
@@ -57,13 +58,18 @@ export class AonComponent implements OnInit, AfterViewInit {
         {
           label: 'Load',
           icon: 'pi pi-fw pi-folder-open',
-          command: (event) => this.loadPanel.toggle(event.originalEvent, event.originalEvent.src)
+          command: (event) => {
+            this.criticalPathService.getSavedCriticalPathNames().subscribe((res) => {
+              this.savedCriticalPaths = res;
+              this.loadPanel.toggle(event.originalEvent, event.originalEvent.src)
+            })
+          }
         },
       ]
     }
   ];
 
-  constructor() { }
+  constructor(private criticalPathService: CriticalPathService) { }
 
   ngOnInit(): void {
   }
@@ -81,7 +87,7 @@ export class AonComponent implements OnInit, AfterViewInit {
   }
 
   loadSavedCriticalPath(id: string): void {
-
+    this.graph.loadGraph(id);
   }
 
 }

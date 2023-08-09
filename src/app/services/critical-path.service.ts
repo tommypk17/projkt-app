@@ -30,6 +30,37 @@ export class CriticalPathService {
     );
   }
 
+  public getCriticalPath(id: string): Observable<FlatCriticalPath> {
+    this.sharedService.queueLoading('getCriticalPath');
+    return this.http.get<FlatCriticalPath>(environment.apiUrl + `/critical-paths/mine/${id}?flatten=true`).pipe(
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<FlatCriticalPath>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('getCriticalPath');
+      })
+    );
+  }
+
+  public getSavedCriticalPathNames(): Observable<any> {
+    this.sharedService.queueLoading('getSavedCriticalPathNames');
+    return this.http.get<any>(environment.apiUrl + '/critical-paths/mine/names').pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('getSavedCriticalPathNames');
+      })
+    );
+  }
+
   private handleError(err: any): void {
     console.log('Error: ' + err)
     this.sharedService.clearLoading();

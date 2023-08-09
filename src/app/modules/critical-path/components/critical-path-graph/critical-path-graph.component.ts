@@ -67,8 +67,8 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
-  loadGraph(): void {
-    this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
+  loadGraph(id: string): void {
+    this.criticalPathService.getCriticalPath(id).subscribe((res: FlatCriticalPath) => {
       let nodes = res.nodes;
       let edges = res.edges;
       let criticalPathNodes = res.criticalPathNodes;

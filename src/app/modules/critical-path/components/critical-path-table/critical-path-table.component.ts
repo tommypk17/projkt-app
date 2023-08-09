@@ -14,12 +14,12 @@ export class CriticalPathTableComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
-      for(let node of res.nodes){
-        node.predecessors = this.predecessors(res.nodes, res.edges, node);
-      }
-      this.graph = res;
-    });
+    // this.criticalPathService.getFlattenedNodes().subscribe((res: FlatCriticalPath) => {
+    //   for(let node of res.nodes){
+    //     node.predecessors = this.predecessors(res.nodes, res.edges, node);
+    //   }
+    //   this.graph = res;
+    // });
   }
 
   predecessors(nodes: CriticalPathNode[], edges: CriticalPathEdge[], currentNode: CriticalPathNode): CriticalPathNode[] {

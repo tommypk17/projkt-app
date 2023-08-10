@@ -19,6 +19,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import {MultiSelectModule} from "primeng/multiselect";
 import { CriticalPathFormComponent } from './components/critical-path-form/critical-path-form.component';
+import {InputNumberModule} from "primeng/inputnumber";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { CriticalPathFormComponent } from './components/critical-path-form/criti
     OverlayPanelModule,
     DialogModule,
     TableModule,
-    MultiSelectModule
+    MultiSelectModule,
+    InputNumberModule
   ]
 })
 export class CriticalPathModule { }

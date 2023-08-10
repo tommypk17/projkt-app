@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {KeyValue} from "@angular/common";
 import {environment} from "../../environments/environment";
 import {catchError, finalize, retry} from "rxjs/operators";
-import {FlatCriticalPath} from "../shared/models/CPM";
+import {CriticalPathNode, FlatCriticalPath} from "../shared/models/CPM";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,22 @@ export class CriticalPathService {
       }),
       finalize(() => {
         this.sharedService.dequeueLoading('getSavedCriticalPathNames');
+      })
+    );
+  }
+
+  public addNodeToCriticalPath(node: {name: string, duration: number, previous: string[]}, graphId: string): Observable<any> {
+    this.sharedService.queueLoading('addNodeToCriticalPath');
+    return this.http.post<any>(environment.apiUrl + `/critical-paths/mine/${graphId}/nodes`, node).pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('addNodeToCriticalPath');
       })
     );
   }

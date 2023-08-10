@@ -20,6 +20,7 @@ export class AonComponent implements OnInit, AfterViewInit {
   @ViewChild('form') form: CriticalPathFormComponent;
   @ViewChild('loadPanel') loadPanel: OverlayPanel;
 
+  graphId: string;
   dialogVisible: boolean = false;
   nodeDetailsVisible: boolean = false;
   selectedNode: CriticalPathNode | undefined;
@@ -37,7 +38,11 @@ export class AonComponent implements OnInit, AfterViewInit {
         },
         {
           label: 'Add',
-          icon: 'pi pi-fw pi-plus'
+          icon: 'pi pi-fw pi-plus',
+          command: (event) => {
+            this.nodeDetailsVisible = true;
+            this.form.newNode();
+          }
         },
         {
           label: 'Save',
@@ -95,7 +100,20 @@ export class AonComponent implements OnInit, AfterViewInit {
       this.table.loadGraph(res);
       this.graph.loadGraph(res);
       this.form.loadGraph(res);
+      this.graphId = id;
     });
+  }
+
+  addNode(node: CriticalPathNode): void {
+    this.criticalPathService.addNodeToCriticalPath({name: node.name, duration: node.duration, previous: node.predecessors.map(x => x.id)}, this.graphId).subscribe((res) => {
+      this.criticalPathService.getCriticalPath(this.graphId).subscribe((res: FlatCriticalPath) => {
+        this.table.loadGraph(res);
+        this.graph.loadGraph(res);
+        this.form.loadGraph(res);
+        this.nodeDetailsVisible = false;
+        this.selectedNode = undefined;
+      });
+    })
   }
 
 }

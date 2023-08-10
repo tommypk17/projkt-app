@@ -25,5 +25,5 @@
 </div>
 <p-sidebar [(visible)]="nodeDetailsVisible">
   <ng-template pTemplate="header">Node Details</ng-template>
-  <app-critical-path-form [node]="selectedNode" #form></app-critical-path-form>
+  <app-critical-path-form [node]="selectedNode" #form (add)="addNode($event)"></app-critical-path-form>
 </p-sidebar>

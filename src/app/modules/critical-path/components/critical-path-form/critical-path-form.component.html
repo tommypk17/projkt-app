@@ -4,15 +4,15 @@
         <label for="id">ID</label>
     </span>
     <span class="p-float-label mt-1">
-        <input pInputText id="name" [(ngModel)]="node.name" class="w-100" [disabled]="!isNew"/>
+        <input pInputText id="name" [(ngModel)]="node.name" class="w-100" [disabled]="!isNew()"/>
         <label for="name">Name</label>
     </span>
     <span class="p-float-label mt-1">
-        <p-inputNumber id="duration" [(ngModel)]="node.duration" class="w-100" [disabled]="!isNew"/>
+        <p-inputNumber id="duration" [(ngModel)]="node.duration" class="w-100" [disabled]="!isNew()"/>
         <label for="duration">Duration</label>
     </span>
     <span class="p-float-label mt-1">
-        <p-multiSelect styleClass="w-100" [options]="allNodes" [(ngModel)]="node.predecessors" optionLabel="name" optionLabel="name" [disabled]="!isNew"></p-multiSelect>
+        <p-multiSelect styleClass="w-100" [options]="allNodes" [(ngModel)]="node.predecessors" optionLabel="name" optionLabel="name" [disabled]="!isNew()"></p-multiSelect>
         <label for="duration">Previous</label>
     </span>
     <span class="p-float-label mt-1">
@@ -36,6 +36,6 @@
         <label for="float">Float</label>
     </span>
     <div class="d-flex mt-1 justify-content-end">
-      <button pButton *ngIf="isNew" (click)="addNode()" label="Add"></button>
+      <button pButton *ngIf="isNew()" (click)="addNode()" label="Add"></button>
     </div>
   </div>

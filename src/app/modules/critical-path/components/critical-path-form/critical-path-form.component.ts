@@ -10,7 +10,6 @@ export class CriticalPathFormComponent implements OnInit{
   @Input('node') node: CriticalPathNode | undefined;
   @Output('add') add: EventEmitter<CriticalPathNode> = new EventEmitter<CriticalPathNode>();
   allNodes: CriticalPathNode[] = [];
-  protected isNew: boolean = false;
 
   ngOnInit() {
   }
@@ -24,10 +23,13 @@ export class CriticalPathFormComponent implements OnInit{
 
   newNode(): void {
     this.node = new CriticalPathNode();
-    this.isNew = true;
   }
 
   addNode(): void {
     this.add.next(this.node);
+  }
+
+  isNew(): boolean {
+    return this.node.id == undefined;
   }
 }

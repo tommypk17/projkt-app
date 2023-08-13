@@ -20,6 +20,8 @@ import { TableModule } from 'primeng/table';
 import {MultiSelectModule} from "primeng/multiselect";
 import { CriticalPathFormComponent } from './components/critical-path-form/critical-path-form.component';
 import {InputNumberModule} from "primeng/inputnumber";
+import {ConfirmationService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import {InputNumberModule} from "primeng/inputnumber";
     DialogModule,
     TableModule,
     MultiSelectModule,
-    InputNumberModule
-  ]
+    InputNumberModule,
+    ConfirmDialogModule
+  ],
+  providers: [ConfirmationService]
 })
 export class CriticalPathModule { }

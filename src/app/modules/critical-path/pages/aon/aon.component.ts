@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MenuItem} from "primeng/api";
+import {ConfirmationService, MenuItem} from "primeng/api";
 import {OverlayPanel} from "primeng/overlaypanel";
 import {Menu} from "primeng/menu";
 import {Dialog} from "primeng/dialog";
@@ -20,10 +20,11 @@ export class AonComponent implements OnInit, AfterViewInit {
   @ViewChild('form') form: CriticalPathFormComponent;
   @ViewChild('loadPanel') loadPanel: OverlayPanel;
 
-  graphId: string;
+  graphId: string | undefined;
   dialogVisible: boolean = false;
   nodeDetailsVisible: boolean = false;
   selectedNode: CriticalPathNode | undefined;
+  deleteSelected: boolean = false;
 
   protected savedCriticalPaths: CriticalPathGraph[] = [];
 
@@ -34,7 +35,7 @@ export class AonComponent implements OnInit, AfterViewInit {
         {
           label: 'View Table',
           icon: 'pi pi-fw pi-table',
-          command: (event) => this.dialogVisible = true
+          command: (event) => this.dialogVisible = true,
         },
         {
           label: 'Add',
@@ -42,15 +43,21 @@ export class AonComponent implements OnInit, AfterViewInit {
           command: (event) => {
             this.nodeDetailsVisible = true;
             this.form.newNode();
-          }
+          },
         },
         {
           label: 'Save',
-          icon: 'pi pi-fw pi-save'
+          icon: 'pi pi-fw pi-save',
         },
         {
+          id: 'delete',
           label: 'Delete',
           icon: 'pi pi-fw pi-trash',
+          command: (event) => {
+            this.deleteSelected = !this.deleteSelected;
+            if(this.deleteSelected) event.item.style = {'background-color': 'red'};
+            else event.item.style = {'background-color': 'unset'};
+          },
         }
       ]
     },
@@ -78,7 +85,7 @@ export class AonComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  constructor(private criticalPathService: CriticalPathService) { }
+  constructor(private criticalPathService: CriticalPathService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
   }
@@ -88,8 +95,28 @@ export class AonComponent implements OnInit, AfterViewInit {
   }
 
   nodeSelected(node: CriticalPathNode): void {
-    this.nodeDetailsVisible = true;
-    this.selectedNode = node;
+    if(this.deleteSelected){
+      this.confirmationService.confirm({
+        key: 'confirmDelete',
+        header: 'Delete Node?',
+        message: `Are you sure that you want to delete <strong>${node.name}</strong>?`,
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.criticalPathService.removeNodeToCriticalPath(this.graphId, node.id).subscribe((res: boolean) => {
+            this.criticalPathService.getCriticalPath(this.graphId).subscribe((res: FlatCriticalPath) => {
+              this.table.loadGraph(res);
+              this.graph.loadGraph(res);
+              this.form.loadGraph(res);
+            });
+          })
+        },
+        reject: () => {
+        }
+      });
+    }else{
+      this.nodeDetailsVisible = true;
+      this.selectedNode = node;
+    }
   }
 
   ngAfterViewInit(): void {

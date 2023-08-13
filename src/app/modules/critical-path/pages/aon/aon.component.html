@@ -1,5 +1,6 @@
 <div class="d-flex">
   <app-critical-path-graph #graph class="w-100" (nodeSelected)="nodeSelected($event)"></app-critical-path-graph>
+  <p-confirmDialog key="confirmDelete"></p-confirmDialog>
   <p-menu [model]="menu"></p-menu>
   <p-overlayPanel #loadPanel>
     <ng-template pTemplate>

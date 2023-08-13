@@ -77,6 +77,22 @@ export class CriticalPathService {
     );
   }
 
+  public removeNodeToCriticalPath(graphId: string, nodeId: string): Observable<any> {
+    this.sharedService.queueLoading('removeNodeToCriticalPath');
+    return this.http.delete<any>(environment.apiUrl + `/critical-paths/mine/${graphId}/nodes/${nodeId}`).pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('removeNodeToCriticalPath');
+      })
+    );
+  }
+
   private handleError(err: any): void {
     console.log('Error: ' + err)
     this.sharedService.clearLoading();

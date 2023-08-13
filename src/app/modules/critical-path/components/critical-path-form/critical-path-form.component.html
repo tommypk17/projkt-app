@@ -36,6 +36,6 @@
         <label for="float">Float</label>
     </span>
     <div class="d-flex mt-1 justify-content-end">
-      <button pButton *ngIf="isNew()" (click)="addNode()" label="Add"></button>
+      <button pButton *ngIf="isNew()" (click)="addNode()" label="Add" [disabled]="!node.name || !node.duration"></button>
     </div>
   </div>

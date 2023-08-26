@@ -25,6 +25,7 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
   private _nodes: CriticalPathNode[] | undefined;
 
   @Output('nodeSelected') nodeSelected: Subject<CriticalPathNode> = new Subject<CriticalPathNode>();
+  @Output('edgeSelected') edgeSelected: Subject<CriticalPathEdge> = new Subject<CriticalPathEdge>();
 
   constructor(private criticalPathService: CriticalPathService) {
     this.chartOption = {
@@ -159,7 +160,16 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
   private chartClick(event: any){
     if(event && event.data){
-      this.nodeSelected.next(this._nodes.find(x => x.id == event.data.id))
+      //if edge selected
+      if(event.data.source && event.data.target) {
+        this.edgeSelected.next(this._edges.find(x => x.from == event.data.source && x.to == event.data.target))
+        return;
+      }
+      //if node selected
+      else{
+        this.nodeSelected.next(this._nodes.find(x => x.id == event.data.id))
+        return;
+      }
     }
   }
 

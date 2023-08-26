@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {KeyValue} from "@angular/common";
 import {environment} from "../../environments/environment";
 import {catchError, finalize, retry} from "rxjs/operators";
-import {CriticalPathNode, FlatCriticalPath} from "../shared/models/CPM";
+import {CriticalPathEdge, CriticalPathNode, FlatCriticalPath} from "../shared/models/CPM";
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +89,38 @@ export class CriticalPathService {
       }),
       finalize(() => {
         this.sharedService.dequeueLoading('removeNodeToCriticalPath');
+      })
+    );
+  }
+
+  public addEdgeToCriticalPath(graphId: string, edge: CriticalPathEdge): Observable<any> {
+    this.sharedService.queueLoading('addEdgeToCriticalPath');
+    return this.http.post<any>(environment.apiUrl + `/critical-paths/mine/${graphId}/edges/`, edge).pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('addEdgeToCriticalPath');
+      })
+    );
+  }
+
+  public removeEdgeFromCriticalPath(graphId: string, edge: CriticalPathEdge): Observable<any> {
+    this.sharedService.queueLoading('removeEdgeFromCriticalPath');
+    return this.http.delete<any>(environment.apiUrl + `/critical-paths/mine/${graphId}/edges/${edge.from}/${edge.to}`).pipe(
+      retry(3),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      }),
+      finalize(() => {
+        this.sharedService.dequeueLoading('removeEdgeFromCriticalPath');
       })
     );
   }

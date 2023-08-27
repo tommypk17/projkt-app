@@ -13,6 +13,8 @@ import {environment} from "../environments/environment";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AuthService} from "./authentication/services/auth.service";
 import {JwtInterceptor} from "./authentication/interceptors/jwt.interceptor";
+import {LoadingInterceptor} from "./interceptors/loading.interceptor";
+import {ResponseInterceptor} from "./interceptors/response.interceptor";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,16 @@ import {JwtInterceptor} from "./authentication/interceptors/jwt.interceptor";
   providers: [
     MessageService,
     AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptor,
+      multi: true
+    },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

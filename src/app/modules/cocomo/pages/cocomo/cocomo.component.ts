@@ -76,9 +76,6 @@ export class CocomoComponent implements OnInit {
       if(res){
         this.cocomoResults = res;
         this.collapseAll();
-        this.messageService.add({key: 'global', severity:'success', summary: 'COCOMO Calculated', detail: 'The requested COCOMO results have been calculated.'})
-      }else{
-        this.messageService.add({key:'global', severity:'error', summary: 'COCOMO Not Calculated', detail: 'The requested COCOMO could not be calculated. Please review the COCOMO and try to resubmit.'})
       }
     });
   }
@@ -100,11 +97,6 @@ export class CocomoComponent implements OnInit {
 
   saveCocomo(nameToSave: string): void {
     this.cocomoService.saveCOCOMO(nameToSave, this.cocomo).subscribe((res: boolean) => {
-      if(res){
-        this.messageService.add({key: 'global', severity:'success', summary: 'COCOMO Saved', detail: 'The COCOMO has been saved.'})
-      }else{
-        this.messageService.add({key: 'global', severity:'error', summary: 'COCOMO Not Saved', detail: 'There was an issue on saving this COCOMO.'})
-      }
       this.cocomoService.getSavedCOCOMONames().subscribe((res: any) => {
         if(res){
           this.savedCocomos = res;
@@ -123,14 +115,10 @@ export class CocomoComponent implements OnInit {
         this.cocomoService.calculateCOCOMO(this.cocomo).subscribe((res: CocomoResponse) => {
           if(res){
             this.cocomoResults = res;
-            this.messageService.add({key: 'global', severity:'success', summary: 'Saved COCOMO Loaded', detail: 'The requested COCOMO has been loaded.'})
           }else{
             this.cocomoResults = undefined;
-            this.messageService.add({key: 'global', severity:'warn', summary: 'Saved COCOMO was partially Loaded', detail: 'The COCOMO loaded, but there was an error with the calculated results.'})
           }
         });
-      }else{
-        this.messageService.add({key: 'global', severity:'error', summary: 'Saved COCOMO Not Loaded', detail: 'There was an issue on loading this COCOMO.'})
       }
     });
   }

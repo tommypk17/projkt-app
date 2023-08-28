@@ -23,6 +23,7 @@ export class AonComponent implements OnInit, AfterViewInit {
 
   graphId: string | undefined;
   dialogVisible: boolean = false;
+  newCriticalPathDialogVisible: boolean = false;
   nodeDetailsVisible: boolean = false;
   selectedNode: CriticalPathNode | undefined;
   deleteSelected: boolean = false;
@@ -88,7 +89,10 @@ export class AonComponent implements OnInit, AfterViewInit {
       items: [
         {
           label: 'New',
-          icon: 'pi pi-fw pi-refresh'
+          icon: 'pi pi-fw pi-refresh',
+          command: (event) => {
+            this.newCriticalPathDialogVisible = true;
+          }
         },
         {
           label: 'Load',
@@ -247,4 +251,17 @@ export class AonComponent implements OnInit, AfterViewInit {
     this.markSelected(undefined);
   }
 
+  saveNewCriticalPath(nameToSave: string): void {
+    this.criticalPathService.createCriticalPath({name: nameToSave}).subscribe((res: string) => {
+      if(res) {
+        this.graphId = res;
+        this.loadSavedCriticalPath(this.graphId);
+      }
+    });
+  }
+
+  invalidCriticalPathName(nameToSave: string): boolean {
+    if(!nameToSave || nameToSave.trim() == '') return true;
+    else return false;
+  }
 }

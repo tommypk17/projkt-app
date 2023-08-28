@@ -38,6 +38,18 @@ export class CriticalPathService {
     );
   }
 
+  public createCriticalPath(criticalPath: {name: string}): Observable<any> {
+    return this.http.post<any>(environment.apiUrl + `/critical-paths/mine`, criticalPath).pipe(
+      map(x => x.data),
+      catchError((err, caught) => {
+        this.handleError(err);
+        return new Observable<any>((subscriber) => {
+          subscriber.next(undefined);
+        })
+      })
+    );
+  }
+
   public getSavedCriticalPathNames(): Observable<any> {
     return this.http.get<any>(environment.apiUrl + '/critical-paths/mine/names').pipe(
       map(x => x.data),

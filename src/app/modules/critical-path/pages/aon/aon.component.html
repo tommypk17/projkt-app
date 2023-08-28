@@ -28,3 +28,16 @@
   <ng-template pTemplate="header">Node Details</ng-template>
   <app-critical-path-form [node]="selectedNode" #form (add)="addNode($event)"></app-critical-path-form>
 </p-sidebar>
+<p-dialog header="New Critical Path" position="top" [(visible)]="newCriticalPathDialogVisible" [modal]="true">
+  <ng-template pTemplate>
+    <div class="mt-2">
+      <div class="p-inputgroup">
+            <span class="p-float-label" style="min-width:275px;">
+              <input type="text" id="input-nameToSave" pInputText #nameToSave />
+            <label for="input-nameToSave">Name</label>
+            </span>
+        <button pButton icon="pi pi-save" [disabled]="invalidCriticalPathName(nameToSave.value)" (click)="saveNewCriticalPath(nameToSave.value); newCriticalPathDialogVisible = !newCriticalPathDialogVisible"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

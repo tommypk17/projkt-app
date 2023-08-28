@@ -22,6 +22,7 @@ export class AonComponent implements OnInit, AfterViewInit {
   @ViewChild('actionMenu') actionMenu: Menu;
 
   graphId: string | undefined;
+  criticalPathName: string | undefined;
   dialogVisible: boolean = false;
   newCriticalPathDialogVisible: boolean = false;
   nodeDetailsVisible: boolean = false;
@@ -200,8 +201,9 @@ export class AonComponent implements OnInit, AfterViewInit {
     this.markSelected(undefined);
   }
 
-  loadSavedCriticalPath(id: string): void {
+  loadSavedCriticalPath(id: string, name: string): void {
     this.criticalPathService.getCriticalPath(id).subscribe((res: FlatCriticalPath) => {
+      this.criticalPathName = name;
       this.table.loadGraph(res);
       this.graph.loadGraph(res);
       this.form.loadGraph(res);
@@ -255,7 +257,7 @@ export class AonComponent implements OnInit, AfterViewInit {
     this.criticalPathService.createCriticalPath({name: nameToSave}).subscribe((res: string) => {
       if(res) {
         this.graphId = res;
-        this.loadSavedCriticalPath(this.graphId);
+        this.loadSavedCriticalPath(this.graphId, nameToSave);
       }
     });
   }

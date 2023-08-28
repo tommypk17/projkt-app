@@ -16,6 +16,7 @@ export class CriticalPathEdge {
 }
 
 export class FlatCriticalPath {
+  name: string;
   nodes: CriticalPathNode[];
   edges: CriticalPathEdge[];
   criticalPathNodes: CriticalPathNode[];

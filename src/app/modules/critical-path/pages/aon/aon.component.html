@@ -1,29 +1,39 @@
-<div class="d-flex">
-  <app-critical-path-graph #graph class="w-100" (nodeSelected)="nodeSelected($event)" (edgeSelected)="edgeSelected($event)"></app-critical-path-graph>
-  <p-confirmDialog key="confirmDelete"></p-confirmDialog>
-  <p-menu #actionMenu [model]="menu"></p-menu>
-  <p-overlayPanel #loadPanel>
-    <ng-template pTemplate>
-      <div class="d-flex flex-column">
-        <ng-container *ngFor="let savedCriticalPath of savedCriticalPaths">
-          <div class="d-flex mt-1 mb-1">
-            <button pButton class="p-button-text" icon="pi pi-angle-left" (click)="loadSavedCriticalPath(savedCriticalPath.id); loadPanel.hide()"></button>
-            <div class="d-flex flex-column">
-              <p>{{savedCriticalPath.name}}</p>
-              <small>{{savedCriticalPath.date | date: 'M/d/yyyy hh:mm:ss'}}</small>
-            </div>
+<p-card [style]="{'margin-bottom': '2em'}">
+  <ng-template pTemplate="header">
+    <div class="mb-2">
+      <h2>Critical Path</h2>
+      <h4 *ngIf="graphId" style="margin-left: 1rem; color: #4939c9">{{criticalPathName}}</h4>
+    </div>
+  </ng-template>
+  <div class="d-flex">
+    <app-critical-path-graph #graph class="w-100" (nodeSelected)="nodeSelected($event)" (edgeSelected)="edgeSelected($event)"></app-critical-path-graph>
+    <p-menu #actionMenu [model]="menu"></p-menu>
+  </div>
+</p-card>
+
+
+<p-confirmDialog key="confirmDelete"></p-confirmDialog>
+<p-overlayPanel #loadPanel>
+  <ng-template pTemplate>
+    <div class="d-flex flex-column">
+      <ng-container *ngFor="let savedCriticalPath of savedCriticalPaths">
+        <div class="d-flex mt-1 mb-1">
+          <button pButton class="p-button-text" icon="pi pi-angle-left" (click)="loadSavedCriticalPath(savedCriticalPath.id, savedCriticalPath.name); loadPanel.hide()"></button>
+          <div class="d-flex flex-column">
+            <p>{{savedCriticalPath.name}}</p>
+            <small>{{savedCriticalPath.date | date: 'M/d/yyyy hh:mm:ss'}}</small>
           </div>
-        </ng-container>
-        <ng-container *ngIf="savedCriticalPaths.length < 1">
-          <p>No saved critical paths!</p>
-        </ng-container>
-      </div>
-    </ng-template>
-  </p-overlayPanel>
-  <p-dialog header="Critical Path Table" [modal]="true" [(visible)]="dialogVisible">
-    <app-critical-path-table #table></app-critical-path-table>
-  </p-dialog>
-</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="savedCriticalPaths.length < 1">
+        <p>No saved critical paths!</p>
+      </ng-container>
+    </div>
+  </ng-template>
+</p-overlayPanel>
+<p-dialog header="Critical Path Table" [modal]="true" [(visible)]="dialogVisible">
+  <app-critical-path-table #table></app-critical-path-table>
+</p-dialog>
 <p-sidebar [(visible)]="nodeDetailsVisible">
   <ng-template pTemplate="header">Node Details</ng-template>
   <app-critical-path-form [node]="selectedNode" #form (add)="addNode($event)"></app-critical-path-form>

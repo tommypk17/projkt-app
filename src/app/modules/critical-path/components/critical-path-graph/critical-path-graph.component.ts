@@ -29,9 +29,6 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
   constructor(private criticalPathService: CriticalPathService) {
     this.chartOption = {
-      title: {
-        text: 'Critical Path',
-      },
       tooltip: {},
       animationDurationUpdate: 1500,
         animationEasingUpdate: 'quinticInOut',

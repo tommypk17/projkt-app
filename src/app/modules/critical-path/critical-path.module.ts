@@ -22,6 +22,7 @@ import { CriticalPathFormComponent } from './components/critical-path-form/criti
 import {InputNumberModule} from "primeng/inputnumber";
 import {ConfirmationService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {CardModule} from "primeng/card";
 
 @NgModule({
   declarations: [
@@ -32,29 +33,30 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     CriticalPathTableComponent,
     CriticalPathFormComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    CriticalPathRoutingModule,
-    NgxEchartsModule.forRoot({
-      /**
-       * This will import all modules from echarts.
-       * If you only need custom modules,
-       * please refer to [Custom Build] section.
-       */
-      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
-    }),
-    SidebarModule,
-    InputTextModule,
-    ButtonModule,
-    MenuModule,
-    OverlayPanelModule,
-    DialogModule,
-    TableModule,
-    MultiSelectModule,
-    InputNumberModule,
-    ConfirmDialogModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        CriticalPathRoutingModule,
+        NgxEchartsModule.forRoot({
+            /**
+             * This will import all modules from echarts.
+             * If you only need custom modules,
+             * please refer to [Custom Build] section.
+             */
+            echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+        }),
+        SidebarModule,
+        InputTextModule,
+        ButtonModule,
+        MenuModule,
+        OverlayPanelModule,
+        DialogModule,
+        TableModule,
+        MultiSelectModule,
+        InputNumberModule,
+        ConfirmDialogModule,
+        CardModule
+    ],
   providers: [ConfirmationService]
 })
 export class CriticalPathModule { }

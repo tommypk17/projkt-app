@@ -13,9 +13,9 @@
 
 
 <p-confirmDialog key="confirmDelete"></p-confirmDialog>
-<p-overlayPanel #loadPanel>
+<p-overlayPanel #loadPanel [style]="{'height': '200px', 'overflow-y': 'auto'}">
   <ng-template pTemplate>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column" style="overflow-y: auto">
       <ng-container *ngFor="let savedCriticalPath of savedCriticalPaths">
         <div class="d-flex mt-1 mb-1">
           <button pButton class="p-button-text" icon="pi pi-angle-left" (click)="loadSavedCriticalPath(savedCriticalPath.id, savedCriticalPath.name); loadPanel.hide()"></button>

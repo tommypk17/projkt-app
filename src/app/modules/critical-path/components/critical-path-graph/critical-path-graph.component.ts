@@ -76,6 +76,11 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
     this._nodes = nodes;
     this._edges = edges;
 
+    if(this._nodes.length == 1 && this._nodes[0].name == 'end') {
+      this.setGraph(new Map<string, CriticalPathCoordinate>(), [], [], [], 0);
+      return;
+    }
+
     coordinates.forEach(coordinate => {
       if(height < coordinate.y) height = coordinate.y;
       if(width < coordinate.x) width = coordinate.x;
@@ -83,7 +88,16 @@ export class CriticalPathGraphComponent implements OnInit, AfterViewInit {
 
     this.graphHeight = height + 80 < window.innerHeight? height + 80 : window.innerHeight;
 
+    this.setGraph(coordinates, nodes, criticalPathNodes, edges, height);
 
+  }
+
+  setGraph(coordinates: Map<string, CriticalPathCoordinate>,
+           nodes: CriticalPathNode[],
+           criticalPathNodes: CriticalPathNode[],
+           edges: CriticalPathEdge[],
+           height: number
+  ) {
     this.updateOption = {
       series: {
         draggable: true,

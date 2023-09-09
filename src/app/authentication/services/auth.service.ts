@@ -1,5 +1,5 @@
-import {Injectable, NgZone} from '@angular/core';
-import {Router} from "@angular/router";
+import {inject, Injectable, NgZone} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat/app";
 import {MessageService} from "primeng/api";
@@ -18,6 +18,14 @@ export class AuthService {
     private ngZone: NgZone,
     private messageService: MessageService,
   ) {  }
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if(this.isLoggedIn) return true;
+    else {
+        this.router.navigate(['', 'auth', 'login'], {skipLocationChange: true});
+        return false;
+    }
+  }
 
   // Returns true when user is logged in and email is verified
   get isLoggedIn(): boolean {
@@ -68,6 +76,10 @@ export class AuthService {
       this.router.navigate(['']);
     });
   }
+}
+
+export const LoginGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+  return inject(AuthService).canActivate(next, state);
 }
 
 export class UserProfile {

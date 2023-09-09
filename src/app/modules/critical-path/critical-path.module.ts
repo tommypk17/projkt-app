@@ -20,7 +20,7 @@ import { TableModule } from 'primeng/table';
 import {MultiSelectModule} from "primeng/multiselect";
 import { CriticalPathFormComponent } from './components/critical-path-form/critical-path-form.component';
 import {InputNumberModule} from "primeng/inputnumber";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {CardModule} from "primeng/card";
 
@@ -47,6 +47,7 @@ import {CardModule} from "primeng/card";
         }),
         SidebarModule,
         InputTextModule,
+        InputNumberModule,
         ButtonModule,
         MenuModule,
         OverlayPanelModule,
@@ -57,6 +58,6 @@ import {CardModule} from "primeng/card";
         ConfirmDialogModule,
         CardModule
     ],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, MessageService]
 })
 export class CriticalPathModule { }

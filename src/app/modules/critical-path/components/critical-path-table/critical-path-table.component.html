@@ -1,109 +1,120 @@
 <ng-container *ngIf="graph != undefined && graph.nodes != undefined">
   <p-table [value]="graph.nodes"
+           styleClass="p-datatable-sm"
+           responsiveLayout="stack" [breakpoint]="'960px'"
            [scrollable]="true"
-           scrollHeight="60vh"
-           [tableStyle]="{ 'min-width': '60vw' }"
+           scrollHeight="400px"
+           [tableStyle]="{ 'min-width': '60vw', 'max-width':'80vw' }"
            dataKey="id" editMode="row">
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 12.5%">Name</th>
-        <th style="width: 12.5%">Duration</th>
-        <th style="width: 12.5%">Predecessors</th>
-        <th style="width: 12.5%">Early Start</th>
-        <th style="width: 12.5%">Early Finish</th>
-        <th style="width: 12.5%">Late Start</th>
-        <th style="width: 12.5%">Late Finish</th>
-        <th style="width: 12.5%">Slack</th>
+        <th></th>
+        <th>Name</th>
+        <th>Duration</th>
+        <th>Predecessors</th>
+        <th>Early Start</th>
+        <th>Early Finish</th>
+        <th>Late Start</th>
+        <th>Late Finish</th>
+        <th>Slack</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-node let-editing="editing" let-ri="rowIndex">
-      <tr [pEditableRow]="node">
-        <td style="width: 12.5%">
+      <tr [pEditableRow]="node" [ngClass]="{'critical-path-row': node.float == 0}">
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button *ngIf="!editing && node.name != 'end'" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(node)" class="p-button-rounded p-button-text"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(node)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(node, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+          </div>
+        </td>
+        <td>
+          <span class="p-column-title">Name</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.name" class="w-100">
+              <input pInputText type="text" [(ngModel)]="node.name" [style]="{'width': '200px'}">
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.name }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Duration</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.duration" class="w-100">
+              <p-inputNumber [(ngModel)]="node.duration" [inputStyle]="{'width': '80px'}"></p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.duration }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Previous</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <p-multiSelect [options]="graph.nodes" [(ngModel)]="node.predecessors" optionLabel="name" display="chip" appendTo="body" [defaultLabel]="'start'"></p-multiSelect>
+              {{ predecessorNames(predecessors(graph.nodes, graph.edges, node)).join(', ') }}
             </ng-template>
             <ng-template pTemplate="output">
               {{ predecessorNames(predecessors(graph.nodes, graph.edges, node)).join(', ') }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Early Start</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.earlyStart" class="w-100" [disabled]="true">
+              {{ node.earlyStart }}
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.earlyStart }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Early Finish</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.earlyFinish" class="w-100" [disabled]="true">
+              {{ node.earlyFinish }}
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.earlyFinish }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Late Start</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.lateStart" class="w-100" [disabled]="true">
+              {{ node.lateStart }}
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.lateStart }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Late Finish</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.lateFinish" class="w-100" [disabled]="true">
+              {{ node.lateFinish }}
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.lateFinish }}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 12.5%">
+        <td>
+          <span class="p-column-title">Float</span>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="node.float" class="w-100" [disabled]="true">
+              {{ node.float }}
             </ng-template>
             <ng-template pTemplate="output">
               {{ node.float }}
             </ng-template>
           </p-cellEditor>
-        </td>
-        <td>
-          <div class="flex align-items-center justify-content-center gap-2">
-            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(node)" class="p-button-rounded p-button-text"></button>
-            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(node)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
-            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(node, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
-          </div>
         </td>
       </tr>
     </ng-template>

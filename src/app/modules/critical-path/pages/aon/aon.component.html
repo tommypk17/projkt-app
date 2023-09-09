@@ -31,8 +31,8 @@
     </div>
   </ng-template>
 </p-overlayPanel>
-<p-dialog header="Critical Path Table" [modal]="true" [(visible)]="dialogVisible">
-  <app-critical-path-table #table></app-critical-path-table>
+<p-dialog header="Critical Path Table" [modal]="true" [(visible)]="dialogVisible" [contentStyle]="{'max-width': '95vw'}">
+  <app-critical-path-table #table (save)="updateNode($event)"></app-critical-path-table>
 </p-dialog>
 <p-sidebar [(visible)]="nodeDetailsVisible">
   <ng-template pTemplate="header">Node Details</ng-template>

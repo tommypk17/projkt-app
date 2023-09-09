@@ -237,6 +237,18 @@ export class AonComponent implements OnInit, AfterViewInit {
       });
     })
   }
+  updateNode(node: CriticalPathNode): void {
+    if(!node.predecessors) node.predecessors = [];
+    this.criticalPathService.updateNodeForCriticalPath({id: node.id, name: node.name, duration: node.duration}, this.graphId).subscribe((res) => {
+      this.criticalPathService.getCriticalPath(this.graphId).subscribe((res: FlatCriticalPath) => {
+        this.table.loadGraph(res);
+        this.graph.loadGraph(res);
+        this.form.loadGraph(res);
+        this.nodeDetailsVisible = false;
+        this.selectedNode = undefined;
+      });
+    })
+  }
 
   edgeSelected(edge: CriticalPathEdge): void {
     if(this.unlinkSelected) {

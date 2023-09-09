@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CriticalPathEdge, CriticalPathNode, FlatCriticalPath} from "../../../../shared/models/CPM";
 import {CriticalPathService} from "../../../../services/critical-path.service";
 
@@ -8,9 +8,10 @@ import {CriticalPathService} from "../../../../services/critical-path.service";
   styleUrls: ['./critical-path-table.component.scss']
 })
 export class CriticalPathTableComponent implements OnInit{
+  @Output('save') save: EventEmitter<CriticalPathNode> = new EventEmitter<CriticalPathNode>();
   protected graph: FlatCriticalPath;
-
-  constructor(private criticalPathService: CriticalPathService) {
+  protected predecessorOptions: CriticalPathNode[] = []
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -26,19 +27,20 @@ export class CriticalPathTableComponent implements OnInit{
     return nodes.map(x => x.name);
   }
 
-  clonedProducts: { [s: string]: CriticalPathNode } = {};
+  clonedRows: { [s: string]: CriticalPathNode } = {};
 
-  onRowEditInit(product: CriticalPathNode) {
-    this.clonedProducts[product.id as string] = { ...product };
+  onRowEditInit(row: CriticalPathNode) {
+    this.clonedRows[row.id as string] = { ...row };
   }
 
-  onRowEditSave(product: CriticalPathNode) {
-    delete this.clonedProducts[product.id as string];
+  onRowEditSave(row: CriticalPathNode) {
+    this.save.emit(row);
+    delete this.clonedRows[row.id as string];
   }
 
-  onRowEditCancel(product: CriticalPathNode, index: number) {
-    this.graph.nodes[index] = this.clonedProducts[product.id as string];
-    delete this.clonedProducts[product.id as string];
+  onRowEditCancel(row: CriticalPathNode, index: number) {
+    this.graph.nodes[index] = this.clonedRows[row.id as string];
+    delete this.clonedRows[row.id as string];
   }
 
   loadGraph(criticalPath: FlatCriticalPath): void {
@@ -46,5 +48,11 @@ export class CriticalPathTableComponent implements OnInit{
         node.predecessors = this.predecessors(criticalPath.nodes, criticalPath.edges, node);
       }
       this.graph = criticalPath;
+      this.predecessorOptions = this.graph.nodes.filter(x => x.name != 'end');
+      this.graph.nodes.sort((a,b) => {
+        if(a.earlyStart > b.earlyStart) return 1;
+        if(a.earlyStart == b.earlyStart) return 0;
+        return -1;
+      });
   }
 }

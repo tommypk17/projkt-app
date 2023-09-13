@@ -39,6 +39,11 @@ export class NavigationComponent implements OnInit {
         label: 'Cocomo',
         icon: 'pi pi-box',
         routerLink:'/cocomo'
+      },
+      {
+        label: 'Critical Path',
+        icon: 'pi pi-calendar',
+        routerLink:'/critical-paths/aon'
       }
     ];
 

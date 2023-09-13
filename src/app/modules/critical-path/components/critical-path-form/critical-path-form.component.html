@@ -1,0 +1,41 @@
+  <div *ngIf="node != undefined">
+    <span class="p-float-label mt-1">
+        <input pInputText id="id" [(ngModel)]="node.id" class="w-100" disabled/>
+        <label for="id">ID</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="name" [(ngModel)]="node.name" class="w-100" [disabled]="!isNew()"/>
+        <label for="name">Name</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <p-inputNumber id="duration" [(ngModel)]="node.duration" class="w-100" [disabled]="!isNew()"/>
+        <label for="duration">Duration</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <p-multiSelect styleClass="w-100" [options]="allNodes" [(ngModel)]="node.predecessors" optionLabel="name" optionLabel="name" [disabled]="!isNew()"></p-multiSelect>
+        <label for="duration">Previous</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="earlyStart" [(ngModel)]="node.earlyStart" class="w-100" disabled/>
+        <label for="earlyStart">Early Start</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="earlyFinish" [(ngModel)]="node.earlyFinish" class="w-100" disabled/>
+        <label for="earlyFinish">Early Finish</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="lateStart" [(ngModel)]="node.lateStart" class="w-100" disabled/>
+        <label for="lateStart">Late Start</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="lateFinish" [(ngModel)]="node.lateFinish" class="w-100" disabled/>
+        <label for="lateFinish">Late Finish</label>
+    </span>
+    <span class="p-float-label mt-1">
+        <input pInputText id="float" [(ngModel)]="node.float" class="w-100" disabled/>
+        <label for="float">Float</label>
+    </span>
+    <div class="d-flex mt-1 justify-content-end">
+      <button pButton *ngIf="isNew()" (click)="addNode()" label="Add" [disabled]="!node.name || !node.duration"></button>
+    </div>
+  </div>

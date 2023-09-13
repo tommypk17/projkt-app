@@ -9,7 +9,7 @@
   </p-messages>
   <p-overlayPanel #savedCocomoPanel>
     <ng-template pTemplate>
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" [style]="{'max-height': '200px','min-height': '50px', 'overflow-y': 'auto', 'padding-left': '1.5rem', 'padding-right': '1.5rem'}">
         <ng-container *ngFor="let savedCocomo of savedCocomos">
           <div class="d-flex mt-1 mb-1">
             <button pButton class="p-button-text" icon="pi pi-angle-left" (click)="viewSavedCocomo(savedCocomo.id); savedCocomoPanel.hide()"></button>

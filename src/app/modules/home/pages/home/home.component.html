@@ -14,7 +14,10 @@
 </p-card>
 <p-card [style]="{'margin-bottom': '2em'}">
   <ng-template pTemplate="header">
-    <h1>Calculate COCOMO</h1>
+    <div class="d-flex justify-content-between">
+      <h1>Calculate COCOMO</h1>
+      <button pButton class="p-button-text p-button-rounded p-button-plain" icon="pi pi-angle-right" routerLink="/cocomo"></button>
+    </div>
   </ng-template>
   <p>
     COCOMO was originally developed by Barry W. Boehm, an american software engineer,
@@ -24,9 +27,22 @@
   <p>
     COCOMO can be a useful first step to understanding effort levels required for software projects.
   </p>
-  <ng-template pTemplate="footer">
-    <div class="d-flex justify-content-center">
-      <button pButton label="Get Started" routerLink="/cocomo"></button>
+</p-card>
+<p-card [style]="{'margin-bottom': '2em'}">
+  <ng-template pTemplate="header">
+    <div class="d-flex justify-content-between">
+      <h1>Critical Path Method</h1>
+      <button pButton  class="p-button-text p-button-rounded p-button-plain" icon="pi pi-angle-right" routerLink="/critical-paths/aon"></button>
     </div>
   </ng-template>
+  <p>
+    A project-modeling technique developed by Morgan R. Walker of DuPont and James E. Kelley Jr. of Remington Rand.
+  </p>
+  <br />
+  <p>
+    CPM can be useful during project planning stages of a project to help identify time dependent tasks. This is determined by identifying all
+    tasks, their durations, and their approximate location in time (step A precedes step B, etc.) Once these are determined a Early Start, Early
+    Finish, Late Start, Late Finish, and Float can be calculated. Steps with a Float of 0 are considered the steps that will determine the overall
+    length of the project.
+  </p>
 </p-card>

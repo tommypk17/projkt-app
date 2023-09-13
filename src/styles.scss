@@ -45,6 +45,12 @@ html, body {
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw);
 }
+
+.p-overlaypanel .p-overlaypanel-content {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 @media (min-width: 1200px) {
   h1, .h1 {
     font-size: 2.5rem;

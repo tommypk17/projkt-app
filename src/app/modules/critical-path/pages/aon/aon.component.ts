@@ -239,7 +239,7 @@ export class AonComponent implements OnInit, AfterViewInit {
   }
   updateNode(node: CriticalPathNode): void {
     if(!node.predecessors) node.predecessors = [];
-    this.criticalPathService.updateNodeForCriticalPath({id: node.id, name: node.name, duration: node.duration}, this.graphId).subscribe((res) => {
+    this.criticalPathService.updateNodeForCriticalPath({name: node.name, duration: node.duration}, this.graphId, node.id).subscribe((res) => {
       this.criticalPathService.getCriticalPath(this.graphId).subscribe((res: FlatCriticalPath) => {
         this.table.loadGraph(res);
         this.graph.loadGraph(res);

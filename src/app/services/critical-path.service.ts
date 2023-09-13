@@ -74,8 +74,8 @@ export class CriticalPathService {
     );
   }
 
-  public updateNodeForCriticalPath(node: {id: string, name: string, duration: number}, graphId: string): Observable<any> {
-    return this.http.put<any>(environment.apiUrl + `/critical-paths/mine/${graphId}/nodes`, node).pipe(
+  public updateNodeForCriticalPath(node: {name: string, duration: number}, graphId: string, nodeId: string): Observable<any> {
+    return this.http.put<any>(environment.apiUrl + `/critical-paths/mine/${graphId}/nodes/${nodeId}`, node).pipe(
       map(x => x.data),
       catchError((err, caught) => {
         this.handleError(err);
